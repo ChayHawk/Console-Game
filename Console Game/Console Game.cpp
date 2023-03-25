@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.5
-// Version Date     : March 25th 2023 @ 11:41 AM
+// Version          : 0.1.6
+// Version Date     : March 25th 2023 @ 2:11 PM
 // Date Created     : 
-// Lines of Code    : 256
+// Lines of Code    : 195
 // Description      : 
 //============================================================================
 
@@ -30,67 +30,27 @@ public:
 		mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
 	//Comment this out for now so we dont mess up the working code while testing
-	//void InitializeMap() 
-	//{
-	//	mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-	//}
-
-	//void DrawMap(int posX, int posY, char player, char transition)
-	//{
-	//	for (int row{}; row < mMapRows; ++row) 
-	//	{
-	//		for (int col{}; col < mMapColumns; ++col)
-	//		{
-	//			if (posX == transition && posY == transition)
-	//			{
-	//				/*mGameMap[row][col] = mMapTile;
-	//				mGameMap[posY][posX] = player;
-
-	//				std::cout << mGameMap[row][col];*/
-	//			}
-	//			else
-	//			{
-	//				mGameMap[row][col] = mMapTile;
-	//				mGameMap[posY][posX] = player;
-
-	//				std::cout << mGameMap[row][col];
-	//			}
-	//			
-	//		}
-	//		std::cout << '\n';
-	//	}
-	//}
-
-	void InitializeMap()
+	void InitializeMap() 
 	{
 		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 	}
 
-	void DrawMap(int posX, int posY, char player, char transition)
+	void DrawMap(int posX, int posY, char player)
 	{
-		for (int row{}; row < mMapRows; ++row)
+		for (int row{}; row < mMapRows; ++row) 
 		{
 			for (int col{}; col < mMapColumns; ++col)
 			{
-				if (posX == transition && posY == transition)
-				{
-					/*mGameMap[row][col] = mMapTile;
-					mGameMap[posY][posX] = player;
 
-					std::cout << mGameMap[row][col];*/
-				}
-				else
-				{
-					mGameMap[row][col] = mMapTile;
-					mGameMap[posY][posX] = player;
+				mGameMap[row][col] = mMapTile;
+				mGameMap[posY][posX] = player;
 
-					std::cout << mGameMap[row][col];
-				}
-
+				std::cout << mGameMap[row][col];
 			}
 			std::cout << '\n';
 		}
 	}
+
 
 	int MaxRow() const
 	{
@@ -102,31 +62,12 @@ public:
 		return !mGameMap.empty() ? mGameMap[0].size() : 0;
 	}
 
-	int GetTransitionX() const
-	{
-		return mTransitionX;
-	}
-
-	int GetTransitionY() const
-	{
-		return mTransitionY;
-	}
-
-	void AddMap(const Map& map, int mapID)
-	{
-		mapList.insert(std::pair<Map, int>(map, mapID));
-	}
-
 private:
 	const std::string mMapName{ "Map Name" };
 	int mMapRows{ 5 };
 	int mMapColumns{ 5 };
 	const char mMapTile{ '+' };
 	std::vector<std::vector<char>> mGameMap;
-	std::map<Map, int> mapList;
-	int mTransitionX{ 0 };
-	int mTransitionY{ 0 };
-	char mTransitionCharacter{ 'Z' };
 };
 
 //Can promote to a character class when i learn virtual, then inherit from there.
@@ -252,4 +193,3 @@ void DirectionalError()
 {
 	std::cout << "Cannot go any further in this direction\n";
 }
-
