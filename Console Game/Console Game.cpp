@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0
-// Version Date     : March 25th 2023 @ 6:01 AM
+// Version          : 0.1.1
+// Version Date     : March 25th 2023 @ 6:09 AM
 // Date Created     : 
 // Lines of Code    : 169
 // Description      : 
@@ -16,7 +16,7 @@ void DirectionalError();
 class Map 
 {
 	public:
-		Map(const std::string& mapName, size_t mapRows, size_t mapColumns, char mapTile) :
+		Map(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
 			mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
 		void InitializeMap() 
@@ -24,11 +24,11 @@ class Map
 			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 		}
 
-		void DrawMap(size_t posX, size_t posY, char player) 
+		void DrawMap(int posX, int posY, char player) 
 		{
-			for (size_t row{}; row < mMapRows; ++row) 
+			for (int row{}; row < mMapRows; ++row) 
 			{
-				for (size_t col{}; col < mMapColumns; ++col) 
+				for (int col{}; col < mMapColumns; ++col)
 				{
 					mGameMap[row][col] = mMapTile;
 					mGameMap[posY][posX] = player;
@@ -39,20 +39,20 @@ class Map
 			}
 		}
 
-		size_t maxRow() const 
+		int maxRow() const
 		{
 			return mGameMap.size();
 		}
 
-		size_t maxCol() const 
+		int maxCol() const
 		{
 			return !mGameMap.empty() ? mGameMap[0].size() : 0;
 		}
 
 	private:
 		const std::string mMapName{ "Map Name" };
-		size_t mMapRows{ 5 };
-		size_t mMapColumns{ 5 };
+		int mMapRows{ 5 };
+		int mMapColumns{ 5 };
 		const char mMapTile{ '+' };
 		const char mMapTransition{ 'Z' }; //UNUSED: Transition from one map to another whn player touches this
 		std::vector<std::vector<char>> mGameMap;
@@ -62,14 +62,14 @@ class Map
 class Player 
 {
 	public:
-		Player(char player, size_t posX, size_t posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
+		Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
 
-		size_t GetPositionX() const 
+		int GetPositionX() const 
 		{
 			return mPosX;
 		}
 
-		size_t GetPositionY() const 
+		int GetPositionY() const 
 		{
 			return mPosY;
 		}
@@ -83,8 +83,8 @@ class Player
 
 	private:
 		const char mPlayer{ 'O' };
-		size_t mPosX{ };
-		size_t mPosY{ };
+		int mPosX{ };
+		int mPosY{ };
 };
 
 int main() 
