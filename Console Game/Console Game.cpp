@@ -1,15 +1,19 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.1
-// Version Date     : March 25th 2023 @ 6:09 AM
+// Version          : 0.1.3
+// Version Date     : March 25th 2023 @ 9:07 AM
 // Date Created     : 
-// Lines of Code    : 169
+// Lines of Code    : 205
 // Description      : 
 //============================================================================
 
 #include <iostream>
 #include <vector>
+#include <string>
+#include <map>
+#include <random>
+#include <utility>
 
 void DirectionalError();
 
@@ -24,13 +28,14 @@ class Map
 			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 		}
 
-		void DrawMap(int posX, int posY, char player) 
+		void DrawMap(int posX, int posY, char player, int transitionX, int transitionY, char transitionCharacter)
 		{
 			for (int row{}; row < mMapRows; ++row) 
 			{
 				for (int col{}; col < mMapColumns; ++col)
 				{
 					mGameMap[row][col] = mMapTile;
+					mGameMap[transitionY][transitionX] = transitionCharacter;
 					mGameMap[posY][posX] = player;
 
 					std::cout << mGameMap[row][col];
@@ -39,14 +44,29 @@ class Map
 			}
 		}
 
-		int maxRow() const
+		int MaxRow() const
 		{
 			return mGameMap.size();
 		}
 
-		int maxCol() const
+		int MaxCol() const
 		{
 			return !mGameMap.empty() ? mGameMap[0].size() : 0;
+		}
+
+		void TransitionMaps(int transitionX, int transitionY, char transitionCharacter)
+		{
+
+		}
+
+		int GetTransitionX() const
+		{
+			return mMapTransitionX;
+		}
+
+		int GetTransitionY() const
+		{
+			return mMapTransitionY;
 		}
 
 	private:
@@ -54,8 +74,10 @@ class Map
 		int mMapRows{ 5 };
 		int mMapColumns{ 5 };
 		const char mMapTile{ '+' };
-		const char mMapTransition{ 'Z' }; //UNUSED: Transition from one map to another whn player touches this
 		std::vector<std::vector<char>> mGameMap;
+		int mMapTransitionX{ 0 };
+		int mMapTransitionY{ 0 };
+		char mMapTransitionCharacter{ 'Z' };
 };
 
 //Can promote to a character class when i learn virtual, then inherit from there.
@@ -74,7 +96,7 @@ class Player
 			return mPosY;
 		}
 
-		char GetPlayerSprite() const 
+		char GetPlayer() const 
 		{
 			return mPlayer;
 		}
@@ -90,13 +112,27 @@ class Player
 int main() 
 {
 	Player Hero('O', 7, 5);
-	Map Courtyard("Courtyard", 20, 50, '-');
+	Map Courtyard("Courtyard", 10, 20, '-');
+	Map Field("Field", 20, 50, '-');
 
 	Courtyard.InitializeMap();
+	Field.InitializeMap();
 
 	while (true) 
 	{
-		Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayerSprite());
+		//Map transition code, need to figure out how to put this in member functions
+		if (Hero.GetPositionX() == 7 && Hero.GetPositionY() == 5)
+		{
+			Field.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer(), 7, 5, 'Z');
+		}
+		else if(Hero.GetPositionX() == 7 && Hero.GetPositionY() == 6)
+		{
+			Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer(), 7, 6, 'Z');
+		}
+		else 
+		{
+			Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer(), 7, 6, 'Z');
+		}
 
 		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
 
@@ -132,7 +168,7 @@ void Player::Movement(int choice, Map map)
 			break;
 
 		case static_cast<int>(Direction::DOWN):
-			if (mPosY < map.maxRow() - 1) 
+			if (mPosY < map.MaxRow() - 1) 
 			{
 				++mPosY;
 				return;
@@ -148,7 +184,7 @@ void Player::Movement(int choice, Map map)
 			break;
 
 		case static_cast<int>(Direction::RIGHT):
-			if (mPosX < map.maxCol() - 1) 
+			if (mPosX < map.MaxCol() - 1) 
 			{
 				++mPosX;
 				return;
