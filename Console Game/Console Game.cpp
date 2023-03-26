@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.6
-// Version Date     : March 25th 2023 @ 2:11 PM
+// Version          : 0.1.7
+// Version Date     : March 25th 2023 @ 9:21 AM
 // Date Created     : 
-// Lines of Code    : 195
+// Lines of Code    : 230
 // Description      : 
 //============================================================================
 
@@ -17,27 +17,30 @@
 
 void DirectionalError();
 
-//TODO: Add map transitioning to Map class. Map transitions should be
-//handled internally, so its not something that should be exposed to the user.
-//One way this could be done is an std::map or vector could be created to 
-//hold the levels, then when the player hits a transition spot it could call the
-//new map and draw it.
+//=========================================================================================================
+// TODO
+//
+// Make a way for the DrawMap function to draw maps of different sizes so when the player transitions
+// maps, it can redraw the map and the new transition point. 
+//=========================================================================================================
 
-class Map
+class Player;
+
+class MapGenerator
 {
 public:
-	Map(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
+	MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
 		mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
 	//Comment this out for now so we dont mess up the working code while testing
-	void InitializeMap() 
+	/*void InitializeMap()
 	{
 		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-	}
+	}*/
 
-	void DrawMap(int posX, int posY, char player)
+	/*void DrawMap(int posX, int posY, char player)
 	{
-		for (int row{}; row < mMapRows; ++row) 
+		for (int row{}; row < mMapRows; ++row)
 		{
 			for (int col{}; col < mMapColumns; ++col)
 			{
@@ -49,15 +52,52 @@ public:
 			}
 			std::cout << '\n';
 		}
+	}*/
+
+
+	void InitializeMap()
+	{
+		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 	}
 
 
-	int MaxRow() const
+	void DrawMap(int playerX, int playerY, char player)
+	{
+		for (int row{}; row < mMapRows; ++row)
+		{
+			for (int col{}; col < mMapColumns; ++col)
+			{
+				//How to transition from one map to another?
+				//One way could be by using std::map to store the map and the
+				//map ID
+				if (player == mTransitionTile)
+				{
+					//How to get last map transitioned to?
+				}
+				else
+				{
+					mGameMap[row][col] = mMapTile;
+				}
+				mGameMap[playerY][playerX] = player;
+
+				std::cout << mGameMap[row][col];
+			}
+			std::cout << '\n';
+		}
+	}
+
+	//TODO: Generate random Map ID or let user set it
+	void AddLevel(MapGenerator mapGenerator)
+	{
+		mLevels.insert(std::pair<MapGenerator, int>(mapGenerator, mMapID));
+	}
+
+	int MaxRows() const
 	{
 		return mGameMap.size();
 	}
 
-	int MaxCol() const
+	int MaxColumns() const
 	{
 		return !mGameMap.empty() ? mGameMap[0].size() : 0;
 	}
@@ -68,7 +108,12 @@ private:
 	int mMapColumns{ 5 };
 	const char mMapTile{ '+' };
 	std::vector<std::vector<char>> mGameMap;
+	std::map<MapGenerator, int> mLevels;
+	char mTransitionTile{ 'H' };
+	int mMapID{ 0 };
 };
+
+
 
 //Can promote to a character class when i learn virtual, then inherit from there.
 class Player
@@ -86,12 +131,12 @@ public:
 		return mPosY;
 	}
 
-	char GetPlayer() const
+	char GetPlayerCharacter() const
 	{
 		return mPlayer;
 	}
 
-	void Movement(int choice, Map);
+	void Movement(int choice, MapGenerator);
 
 private:
 	const char mPlayer{ 'O' };
@@ -99,30 +144,20 @@ private:
 	int mPosY{ };
 };
 
+
+
 int main()
 {
 	Player Hero('O', 7, 5);
-	Map Courtyard("Courtyard", 10, 20, '-');
-	Map Field("Field", 20, 50, '-');
+	MapGenerator Courtyard("Courtyard", 10, 20, '-');
+	MapGenerator Field("Field", 20, 50, '-');
 
 	Courtyard.InitializeMap();
 	Field.InitializeMap();
 
 	while (true)
 	{
-		//Map transition code, need to figure out how to put this in member functions
-		if (Hero.GetPositionX() == 7 && Hero.GetPositionY() == 5)
-		{
-			Field.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer());
-		}
-		else if (Hero.GetPositionX() == 7 && Hero.GetPositionY() == 6)
-		{
-			Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer());
-		}
-		else
-		{
-			Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayer());
-		}
+		Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayerCharacter());
 
 		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
 
@@ -140,7 +175,7 @@ int main()
 	}
 }
 
-void Player::Movement(int choice, Map map)
+void Player::Movement(int choice, MapGenerator mapGenerator)
 {
 	enum class Direction
 	{
@@ -158,7 +193,7 @@ void Player::Movement(int choice, Map map)
 		break;
 
 	case static_cast<int>(Direction::DOWN):
-		if (mPosY < map.MaxRow() - 1)
+		if (mPosY < mapGenerator.MaxRows() - 1)
 		{
 			++mPosY;
 			return;
@@ -174,7 +209,7 @@ void Player::Movement(int choice, Map map)
 		break;
 
 	case static_cast<int>(Direction::RIGHT):
-		if (mPosX < map.MaxCol() - 1)
+		if (mPosX < mapGenerator.MaxColumns() - 1)
 		{
 			++mPosX;
 			return;
