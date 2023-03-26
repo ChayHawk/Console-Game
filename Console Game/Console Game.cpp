@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.7
-// Version Date     : March 25th 2023 @ 9:21 AM
+// Version          : 0.1.8
+// Version Date     : March 25th 2023 @ 11:24 AM
 // Date Created     : 
-// Lines of Code    : 230
+// Lines of Code    : 217
 // Description      : 
 //============================================================================
 
@@ -60,24 +60,13 @@ public:
 		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 	}
 
-
 	void DrawMap(int playerX, int playerY, char player)
 	{
 		for (int row{}; row < mMapRows; ++row)
 		{
 			for (int col{}; col < mMapColumns; ++col)
 			{
-				//How to transition from one map to another?
-				//One way could be by using std::map to store the map and the
-				//map ID
-				if (player == mTransitionTile)
-				{
-					//How to get last map transitioned to?
-				}
-				else
-				{
-					mGameMap[row][col] = mMapTile;
-				}
+				mGameMap[row][col] = mMapTile;
 				mGameMap[playerY][playerX] = player;
 
 				std::cout << mGameMap[row][col];
@@ -86,10 +75,10 @@ public:
 		}
 	}
 
-	//TODO: Generate random Map ID or let user set it
-	void AddLevel(MapGenerator mapGenerator)
+	//Look on CPP forum for solution
+	void UpdateMap()
 	{
-		mLevels.insert(std::pair<MapGenerator, int>(mapGenerator, mMapID));
+
 	}
 
 	int MaxRows() const
@@ -108,9 +97,7 @@ private:
 	int mMapColumns{ 5 };
 	const char mMapTile{ '+' };
 	std::vector<std::vector<char>> mGameMap;
-	std::map<MapGenerator, int> mLevels;
 	char mTransitionTile{ 'H' };
-	int mMapID{ 0 };
 };
 
 
