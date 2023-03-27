@@ -105,30 +105,35 @@ private:
 //Can promote to a character class when i learn virtual, then inherit from there.
 class Player
 {
-public:
-	Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
+	public:
+		Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
 
-	int GetPositionX() const
-	{
-		return mPosX;
-	}
+		enum class Direction
+		{
+			UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
+		};
 
-	int GetPositionY() const
-	{
-		return mPosY;
-	}
+		int GetPositionX() const
+		{
+			return mPosX;
+		}
 
-	char GetPlayerCharacter() const
-	{
-		return mPlayer;
-	}
+		int GetPositionY() const
+		{
+			return mPosY;
+		}
 
-	void Movement(int choice, MapGenerator);
+		char GetPlayerCharacter() const
+		{
+			return mPlayer;
+		}
 
-private:
-	const char mPlayer{ 'O' };
-	int mPosX{ };
-	int mPosY{ };
+		void Movement(Player::Direction choice, MapGenerator& mapGenerator);
+
+	private:
+		const char mPlayer{ 'O' };
+		int mPosX{ };
+		int mPosY{ };
 };
 
 
@@ -158,20 +163,15 @@ int main()
 		int choice{ };
 
 		std::cin >> choice;
-		Hero.Movement(choice, Courtyard);
+		Hero.Movement(static_cast<Player::Direction>(choice), Courtyard);
 	}
 }
 
-void Player::Movement(int choice, MapGenerator mapGenerator)
+void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 {
-	enum class Direction
-	{
-		UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
-	};
-
 	switch (choice)
 	{
-	case static_cast<int>(Direction::UP):
+	case Direction::UP:
 		if (mPosY)
 		{
 			--mPosY;
@@ -179,7 +179,7 @@ void Player::Movement(int choice, MapGenerator mapGenerator)
 		}
 		break;
 
-	case static_cast<int>(Direction::DOWN):
+	case Direction::DOWN:
 		if (mPosY < mapGenerator.MaxRows() - 1)
 		{
 			++mPosY;
@@ -187,7 +187,7 @@ void Player::Movement(int choice, MapGenerator mapGenerator)
 		}
 		break;
 
-	case static_cast<int>(Direction::LEFT):
+	case Direction::LEFT:
 		if (mPosX)
 		{
 			--mPosX;
@@ -195,7 +195,7 @@ void Player::Movement(int choice, MapGenerator mapGenerator)
 		}
 		break;
 
-	case static_cast<int>(Direction::RIGHT):
+	case Direction::RIGHT:
 		if (mPosX < mapGenerator.MaxColumns() - 1)
 		{
 			++mPosX;
