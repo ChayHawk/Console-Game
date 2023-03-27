@@ -24,7 +24,41 @@ void DirectionalError();
 // maps, it can redraw the map and the new transition point. 
 //=========================================================================================================
 
-class Player;
+//Can promote to a character class when i learn virtual, then inherit from there.
+class Player
+{
+public:
+	Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
+
+	enum class Direction
+	{
+		UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
+	};
+
+	int GetPositionX() const
+	{
+		return mPosX;
+	}
+
+	int GetPositionY() const
+	{
+		return mPosY;
+	}
+
+	char GetPlayerCharacter() const
+	{
+		return mPlayer;
+	}
+
+	void Movement(Player::Direction choice, MapGenerator& mapGenerator);
+
+private:
+	const char mPlayer{ 'O' };
+	int mPosX{ };
+	int mPosY{ };
+};
+
+
 
 class MapGenerator
 {
@@ -99,43 +133,6 @@ private:
 	std::vector<std::vector<char>> mGameMap;
 	char mTransitionTile{ 'H' };
 };
-
-
-
-//Can promote to a character class when i learn virtual, then inherit from there.
-class Player
-{
-	public:
-		Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
-
-		enum class Direction
-		{
-			UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
-		};
-
-		int GetPositionX() const
-		{
-			return mPosX;
-		}
-
-		int GetPositionY() const
-		{
-			return mPosY;
-		}
-
-		char GetPlayerCharacter() const
-		{
-			return mPlayer;
-		}
-
-		void Movement(Player::Direction choice, MapGenerator& mapGenerator);
-
-	private:
-		const char mPlayer{ 'O' };
-		int mPosX{ };
-		int mPosY{ };
-};
-
 
 
 int main()
