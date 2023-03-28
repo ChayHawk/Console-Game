@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.9
-// Version Date     : March 25th 2023 @ 11:51 AM
+// Version          : 0.1.0.10
+// Version Date     : March 25th 2023 @ 11:27 AM
 // Date Created     : 
-// Lines of Code    : 217
+// Lines of Code    : 216
 // Description      : 
 //============================================================================
 
@@ -23,6 +23,8 @@ void DirectionalError();
 // Make a way for the DrawMap function to draw maps of different sizes so when the player transitions
 // maps, it can redraw the map and the new transition point. 
 //=========================================================================================================
+
+class MapGenerator;
 
 //Can promote to a character class when i learn virtual, then inherit from there.
 class Player
@@ -160,7 +162,7 @@ int main()
 		int choice{ };
 
 		std::cin >> choice;
-		Hero.Movement(static_cast<Player::Direction>(choice), Courtyard);
+		/*Hero.Movement(static_cast<Player::Direction>(choice), Courtyard);*/
 	}
 }
 
