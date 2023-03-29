@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.10
-// Version Date     : March 25th 2023 @ 11:27 AM
+// Version          : 0.1.0.11
+// Version Date     : March 29th 2023 @ 11:10 AM
 // Date Created     : 
-// Lines of Code    : 216
+// Lines of Code    : 220
 // Description      : 
 //============================================================================
 
@@ -91,30 +91,28 @@ public:
 	}*/
 
 
-	void InitializeMap()
+	void InitializeMap(const Player& player)
 	{
 		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
+		mGameMap[player.GetPositionY()][player.GetPositionX()] = player.GetPlayerCharacter();
 	}
 
-	void DrawMap(int playerX, int playerY, char player)
+	void DrawMap() const
 	{
-		for (int row{}; row < mMapRows; ++row)
+		for (const auto& row : mGameMap)
 		{
-			for (int col{}; col < mMapColumns; ++col)
+			for (const auto& column : row)
 			{
-				mGameMap[row][col] = mMapTile;
-				mGameMap[playerY][playerX] = player;
-
-				std::cout << mGameMap[row][col];
+				std::cout << column;
 			}
 			std::cout << '\n';
 		}
 	}
 
-	//Look on CPP forum for solution
-	void UpdateMap()
+	void Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char player)
 	{
-
+		mGameMap[oldY][oldX] = mMapTile;
+		mGameMap[newY][newX] = player;
 	}
 
 	int MaxRows() const
@@ -140,15 +138,13 @@ private:
 int main()
 {
 	Player Hero('O', 7, 5);
-	MapGenerator Courtyard("Courtyard", 10, 20, '-');
 	MapGenerator Field("Field", 20, 50, '-');
 
-	Courtyard.InitializeMap();
-	Field.InitializeMap();
+	Field.InitializeMap(Hero);
 
 	while (true)
 	{
-		Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayerCharacter());
+		Field.DrawMap();
 
 		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
 
@@ -162,49 +158,57 @@ int main()
 		int choice{ };
 
 		std::cin >> choice;
-		/*Hero.Movement(static_cast<Player::Direction>(choice), Courtyard);*/
+		Hero.Movement(static_cast<Player::Direction>(choice), Field);
 	}
 }
 
-void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
+void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator) 
 {
-	switch (choice)
+	switch (choice) 
 	{
-	case Direction::UP:
-		if (mPosY)
-		{
-			--mPosY;
-			return;
-		}
-		break;
+		case Direction::UP:
+			if (mPosY) 
+			{
+				const auto oldY{ mPosY-- };
 
-	case Direction::DOWN:
-		if (mPosY < mapGenerator.MaxRows() - 1)
-		{
-			++mPosY;
-			return;
-		}
-		break;
+				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mPlayer);
+				return;
+			}
+			break;
 
-	case Direction::LEFT:
-		if (mPosX)
-		{
-			--mPosX;
-			return;
-		}
-		break;
+		case Direction::DOWN:
+			if (mPosY < mapGenerator.MaxRows() - 1) 
+			{
+				const auto oldY{ mPosY++ };
 
-	case Direction::RIGHT:
-		if (mPosX < mapGenerator.MaxColumns() - 1)
-		{
-			++mPosX;
-			return;
-		}
-		break;
+				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mPlayer);
+				return;
+			}
+			break;
 
-	default:
-		std::cout << "Invalid Input\n";
-		return;
+		case Direction::LEFT:
+			if (mPosX) 
+			{
+				const auto oldX{ mPosX-- };
+
+				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mPlayer);
+				return;
+			}
+			break;
+
+		case Direction::RIGHT:
+			if (mPosX < mapGenerator.MaxColumns() - 1) 
+			{
+				const auto oldX{ mPosX++ };
+
+				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mPlayer);
+				return;
+			}
+			break;
+
+		default:
+			std::cout << "Invalid Input\n";
+			return;
 	}
 
 	DirectionalError();
