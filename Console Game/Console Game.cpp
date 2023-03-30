@@ -17,16 +17,8 @@
 
 void DirectionalError();
 
-//=========================================================================================================
-// TODO
-//
-// Make a way for the DrawMap function to draw maps of different sizes so when the player transitions
-// maps, it can redraw the map and the new transition point. 
-//=========================================================================================================
-
 class MapGenerator;
 
-//Can promote to a character class when i learn virtual, then inherit from there.
 class Player
 {
 public:
@@ -59,7 +51,6 @@ private:
 	int mPosX{ };
 	int mPosY{ };
 };
-
 
 
 class MapGenerator
@@ -111,6 +102,7 @@ public:
 
 	void Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char player)
 	{
+		//std::cout << "old x: " << oldX << " - old Y:" << oldY << '\n';
 		mGameMap[oldY][oldX] = mMapTile;
 		mGameMap[newY][newX] = player;
 	}
@@ -169,7 +161,13 @@ void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 		case Direction::UP:
 			if (mPosY) 
 			{
-				const auto oldY{ mPosY-- };
+				//Initialize and set mPosY to the oldY. It can be used in the update 
+				//function
+				const auto oldY{ mPosY-- }; //This
+
+				//Is the same exact thing as this:
+				//const auto oldY{ mPosY };
+				//mPosY--;
 
 				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mPlayer);
 				return;
