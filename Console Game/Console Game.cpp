@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.18
-// Version Date     : March 31th 2023 @ 4:49 PM
+// Version          : 0.1.0.19
+// Version Date     : March 31th 2023 @ 4:52 PM
 // Date Created     : 
-// Lines of Code    : 263
+// Lines of Code    : 264
 // Description      : 
 //============================================================================
 
@@ -17,9 +17,9 @@
 class MapGenerator;
 
 //==================================================
-//												  //
-//CHARACTER CLASS								  //
-//												  //
+//												  
+//CHARACTER CLASS								  
+//												  
 //==================================================
 class Character
 {
@@ -61,9 +61,9 @@ class Character
 };
 
 //==================================================
-//												  //
-//PLAYER CLASS									  //
-//												  //
+//												  
+//PLAYER CLASS									  
+//												 
 //==================================================
 class Player : public Character
 {
@@ -94,9 +94,9 @@ class Enemy : public Character
 
 
 //==================================================
-//												  //
-//CMapGenerator CLASS							  //
-//												  //
+//												  
+//CMapGenerator CLASS							  
+//												  
 //==================================================
 class MapGenerator
 {
@@ -174,7 +174,8 @@ int main()
 	MapGenerator Field("Field", 20, 50, '-');
 
 	//PROBLEM: Player is drawn before the enemy and enemy only 
-	//appears when player moves once.
+	//appears when player moves once. Could have something to do
+	//with the Update function.
 	Field.InitializeMap(Hero);
 	Field.InitializeMap(Goblin);
 	//Field.DrawObjects(mt, '&', 10, Hero);
