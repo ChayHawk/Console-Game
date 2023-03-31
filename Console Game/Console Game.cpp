@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.17
-// Version Date     : March 31th 2023 @ 4:43 PM
+// Version          : 0.1.0.18
+// Version Date     : March 31th 2023 @ 4:49 PM
 // Date Created     : 
-// Lines of Code    : 245
+// Lines of Code    : 263
 // Description      : 
 //============================================================================
 
@@ -16,6 +16,11 @@
 
 class MapGenerator;
 
+//==================================================
+//												  //
+//CHARACTER CLASS								  //
+//												  //
+//==================================================
 class Character
 {
 	public:
@@ -55,6 +60,11 @@ class Character
 		int mPosY{ };
 };
 
+//==================================================
+//												  //
+//PLAYER CLASS									  //
+//												  //
+//==================================================
 class Player : public Character
 {
 public:
@@ -83,6 +93,11 @@ class Enemy : public Character
 };
 
 
+//==================================================
+//												  //
+//CMapGenerator CLASS							  //
+//												  //
+//==================================================
 class MapGenerator
 {
 	public:
@@ -158,6 +173,8 @@ int main()
 	Enemy Goblin("Goblin", 'X', 15, 15);
 	MapGenerator Field("Field", 20, 50, '-');
 
+	//PROBLEM: Player is drawn before the enemy and enemy only 
+	//appears when player moves once.
 	Field.InitializeMap(Hero);
 	Field.InitializeMap(Goblin);
 	//Field.DrawObjects(mt, '&', 10, Hero);
@@ -240,6 +257,7 @@ void Character::Movement(Character::Direction choice, MapGenerator& mapGenerator
 	}
 
 	std::cout << "Cannot go any further in this direction\n";
+	//PROBLEM: GetName() returns default character name instead of actual characters name.
+	//TODO: Find a way to make it so Direction cna be converted to a string
 	std::cout << GetName() << " tried to go " << " but couldnt!\n";
-
 }
