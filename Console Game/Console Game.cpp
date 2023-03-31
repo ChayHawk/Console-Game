@@ -13,6 +13,7 @@
 #include <string>
 #include <map>
 #include <random>
+#include <chrono>
 #include <utility>
 
 void DirectionalError();
@@ -117,6 +118,45 @@ public:
 		return !mGameMap.empty() ? mGameMap[0].size() : 0;
 	}
 
+	//NOT WORKING
+	//The reason this is not working is because the randomRows and randomColumns variables are the exact same
+	//for all x amount of time the for loop loops, its not randomizing the positions each time.
+	// 
+	//BUGS
+	//Sometimes vector goes out of range
+	void DrawObjects(int randomRows, int randomColumns, char object, int amountToPlace, const Player& player)
+	{
+		//Test to see if we already have an object where we are going to draw one on the map.
+		bool isPlaced{ false };
+
+		std::cout << "randomRows: " << randomRows << " randomColumns: " << randomColumns << '\n';
+		mGameMap[randomRows][randomColumns] = object;
+
+		//for (int i{ }; i < amountToPlace; ++i)
+		//{
+		//	if (randomRows == player.GetPositionY() && randomColumns == player.GetPositionX())
+		//	{
+		//		std::cout << "isPlaced is true\n";
+		//		isPlaced = true;
+		//		continue;
+		//	}
+		//	else
+		//	{
+		//		if (isPlaced == true)
+		//		{
+		//			//keep looping through until all objects are placed on the map
+		//			std::cout << "isPlaced was true so now we add one to amountToPlace.\n";
+		//			amountToPlace++;
+		//		}
+		//		else 
+		//		{
+		//			std::cout << "isPlaced is false\n";
+		//			mGameMap[randomRows][randomColumns] = object;
+		//		}
+		//	}
+		//}
+	}
+
 private:
 	const std::string mMapName{ "Map Name" };
 	int mMapRows{ 5 };
@@ -124,15 +164,30 @@ private:
 	const char mMapTile{ '+' };
 	std::vector<std::vector<char>> mGameMap;
 	char mTransitionTile{ 'H' };
+	char mObject{ '#'};
 };
+
+
+void Secret(const Player& player);
 
 
 int main()
 {
+	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
+	mt.discard(1000);
+
 	Player Hero('O', 7, 5);
 	MapGenerator Field("Field", 20, 50, '-');
+	std::uniform_int_distribution<> rows{0, 20};
+	std::uniform_int_distribution<> columns{0, 50};
 
 	Field.InitializeMap(Hero);
+
+	//Temporary solution
+	for (int i{ }; i < 5; ++i)
+	{
+		Field.DrawObjects(rows(mt), columns(mt), '&', 5, Hero);
+	}
 
 	while (true)
 	{
@@ -151,6 +206,7 @@ int main()
 
 		std::cin >> choice;
 		Hero.Movement(static_cast<Player::Direction>(choice), Field);
+		Secret(Hero);
 	}
 }
 
@@ -215,4 +271,13 @@ void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 void DirectionalError()
 {
 	std::cout << "Cannot go any further in this direction\n";
+}
+
+//This is just a test
+void Secret(const Player& player)
+{
+	if (player.GetPositionX() == 30 && player.GetPositionY() == 13)
+	{
+		std::cout << "You found a secret!\n";
+	}
 }
