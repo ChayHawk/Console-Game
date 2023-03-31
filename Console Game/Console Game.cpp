@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.14
-// Version Date     : March 31th 2023 @ 3:05 PM
+// Version          : 0.1.0.15
+// Version Date     : March 31th 2023 @ 3:24 PM
 // Date Created     : 
-// Lines of Code    : 257
+// Lines of Code    : 237
 // Description      : 
 //============================================================================
 
@@ -19,6 +19,14 @@
 void DirectionalError();
 
 class MapGenerator;
+
+class Character
+{
+	public:
+
+	private:
+
+};
 
 class Player
 {
@@ -53,35 +61,25 @@ private:
 	int mPosY{ };
 };
 
+class Enemy
+{
+	public:
+		Enemy();
+
+		void Move()
+		{
+
+		}
+
+	private:
+		char mEnemy{ 'E' };
+};
 
 class MapGenerator
 {
 public:
 	MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
 		mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
-
-	//Comment this out for now so we dont mess up the working code while testing
-	/*void InitializeMap()
-	{
-		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-	}*/
-
-	/*void DrawMap(int posX, int posY, char player)
-	{
-		for (int row{}; row < mMapRows; ++row)
-		{
-			for (int col{}; col < mMapColumns; ++col)
-			{
-
-				mGameMap[row][col] = mMapTile;
-				mGameMap[posY][posX] = player;
-
-				std::cout << mGameMap[row][col];
-			}
-			std::cout << '\n';
-		}
-	}*/
-
 
 	void InitializeMap(const Player& player)
 	{
@@ -118,16 +116,11 @@ public:
 		return !mGameMap.empty() ? mGameMap[0].size() : 0;
 	}
 
-	//NOT WORKING
-	//The reason this is not working is because the randomRows and randomColumns variables are the exact same
-	//for all x amount of time the for loop loops, its not randomizing the positions each time.
 	void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Player& player)
 	{
 	
 		std::uniform_int_distribution<> rows{0, 19};
 		std::uniform_int_distribution<> columns{0, 49};
-
-		std::cout << "DEBUG - randomRows: " << rows << " randomColumns: " << columns << '\n';
 
 		for (int i{ }; i < amountToPlace; ++i)
 		{
@@ -148,9 +141,6 @@ private:
 	char mTransitionTile{ 'H' };
 	char mObject{ '#'};
 };
-
-
-void Secret(const Player& player);
 
 
 int main()
@@ -180,7 +170,6 @@ int main()
 
 		std::cin >> choice;
 		Hero.Movement(static_cast<Player::Direction>(choice), Field);
-		Secret(Hero);
 	}
 }
 
@@ -245,13 +234,4 @@ void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 void DirectionalError()
 {
 	std::cout << "Cannot go any further in this direction\n";
-}
-
-//This is just a test
-void Secret(const Player& player)
-{
-	if (player.GetPositionX() == 30 && player.GetPositionY() == 13)
-	{
-		std::cout << "You found a secret!\n";
-	}
 }
