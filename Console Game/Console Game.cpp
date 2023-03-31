@@ -121,40 +121,15 @@ public:
 	//NOT WORKING
 	//The reason this is not working is because the randomRows and randomColumns variables are the exact same
 	//for all x amount of time the for loop loops, its not randomizing the positions each time.
-	// 
-	//BUGS
-	//Sometimes vector goes out of range
 	void DrawObjects(int randomRows, int randomColumns, char object, int amountToPlace, const Player& player)
 	{
-		//Test to see if we already have an object where we are going to draw one on the map.
-		bool isPlaced{ false };
+		std::cout << "DEUG - randomRows: " << randomRows << " randomColumns: " << randomColumns << '\n';
 
-		std::cout << "randomRows: " << randomRows << " randomColumns: " << randomColumns << '\n';
-		mGameMap[randomRows][randomColumns] = object;
-
-		//for (int i{ }; i < amountToPlace; ++i)
-		//{
-		//	if (randomRows == player.GetPositionY() && randomColumns == player.GetPositionX())
-		//	{
-		//		std::cout << "isPlaced is true\n";
-		//		isPlaced = true;
-		//		continue;
-		//	}
-		//	else
-		//	{
-		//		if (isPlaced == true)
-		//		{
-		//			//keep looping through until all objects are placed on the map
-		//			std::cout << "isPlaced was true so now we add one to amountToPlace.\n";
-		//			amountToPlace++;
-		//		}
-		//		else 
-		//		{
-		//			std::cout << "isPlaced is false\n";
-		//			mGameMap[randomRows][randomColumns] = object;
-		//		}
-		//	}
-		//}
+		//Do not draw over player
+		if (randomRows != player.GetPositionX() && randomRows != player.GetPositionY() || randomColumns != player.GetPositionX() && randomColumns != player.GetPositionY())
+		{
+			mGameMap[randomRows][randomColumns] = object;
+		}
 	}
 
 private:
@@ -178,15 +153,15 @@ int main()
 
 	Player Hero('O', 7, 5);
 	MapGenerator Field("Field", 20, 50, '-');
-	std::uniform_int_distribution<> rows{0, 20};
-	std::uniform_int_distribution<> columns{0, 50};
+	std::uniform_int_distribution<> rows{0, 19};
+	std::uniform_int_distribution<> columns{0, 49};
 
 	Field.InitializeMap(Hero);
 
-	//Temporary solution
-	for (int i{ }; i < 5; ++i)
+	//Temporary solution, would like to do the for loop inside a function.
+	for (int i{ }; i < 10; ++i)
 	{
-		Field.DrawObjects(rows(mt), columns(mt), '&', 5, Hero);
+		Field.DrawObjects(rows(mt), columns(mt), '&', 100, Hero);
 	}
 
 	while (true)
