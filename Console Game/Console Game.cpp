@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.13
-// Version Date     : March 31th 2023 @ 1:15 PM
+// Version          : 0.1.0.14
+// Version Date     : March 31th 2023 @ 3:05 PM
 // Date Created     : 
-// Lines of Code    : 258
+// Lines of Code    : 257
 // Description      : 
 //============================================================================
 
@@ -121,14 +121,21 @@ public:
 	//NOT WORKING
 	//The reason this is not working is because the randomRows and randomColumns variables are the exact same
 	//for all x amount of time the for loop loops, its not randomizing the positions each time.
-	void DrawObjects(int randomRows, int randomColumns, char object, int amountToPlace, const Player& player)
+	void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Player& player)
 	{
-		std::cout << "DEUG - randomRows: " << randomRows << " randomColumns: " << randomColumns << '\n';
+	
+		std::uniform_int_distribution<> rows{0, 19};
+		std::uniform_int_distribution<> columns{0, 49};
 
-		//Do not draw over player
-		if (randomRows != player.GetPositionX() && randomRows != player.GetPositionY() || randomColumns != player.GetPositionX() && randomColumns != player.GetPositionY())
+		std::cout << "DEBUG - randomRows: " << rows << " randomColumns: " << columns << '\n';
+
+		for (int i{ }; i < amountToPlace; ++i)
 		{
-			mGameMap[randomRows][randomColumns] = object;
+			//Do not draw over player
+			if (rows(mt) != player.GetPositionX() && rows(mt) != player.GetPositionY() || columns(mt) != player.GetPositionX() && columns(mt) != player.GetPositionY())
+			{
+				mGameMap[rows(mt)][columns(mt)] = object;
+			}
 		}
 	}
 
@@ -149,20 +156,12 @@ void Secret(const Player& player);
 int main()
 {
 	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
-	mt.discard(1000);
 
 	Player Hero('O', 7, 5);
 	MapGenerator Field("Field", 20, 50, '-');
-	std::uniform_int_distribution<> rows{0, 19};
-	std::uniform_int_distribution<> columns{0, 49};
 
 	Field.InitializeMap(Hero);
-
-	//Temporary solution, would like to do the for loop inside a function.
-	for (int i{ }; i < 10; ++i)
-	{
-		Field.DrawObjects(rows(mt), columns(mt), '&', 100, Hero);
-	}
+	Field.DrawObjects(mt, '&', 10, Hero);
 
 	while (true)
 	{
