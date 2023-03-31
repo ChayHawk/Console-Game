@@ -1,145 +1,152 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.15
-// Version Date     : March 31th 2023 @ 3:24 PM
+// Version          : 0.1.0.17
+// Version Date     : March 31th 2023 @ 4:43 PM
 // Date Created     : 
-// Lines of Code    : 237
+// Lines of Code    : 245
 // Description      : 
 //============================================================================
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include <map>
 #include <random>
 #include <chrono>
-#include <utility>
-
-void DirectionalError();
 
 class MapGenerator;
 
 class Character
 {
 	public:
+		Character(const std::string& name, char character, int posX, int posY) : mCharacter(character), mPosX(posX), mPosY(posY) {}
+
+		enum class Direction
+		{
+			UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
+		};
+
+		int GetPositionX() const
+		{
+			return mPosX;
+		}
+
+		int GetPositionY() const
+		{
+			return mPosY;
+		}
+
+		char GetCharacter() const
+		{
+			return mCharacter;
+		}
+
+		std::string GetName()
+		{
+			return mName;
+		}
+
+		void Movement(Character::Direction choice, MapGenerator& mapGenerator);
 
 	private:
-
+		std::string mName{ "Character" };
+		const char mCharacter{ 'C' };
+		int mPosX{ };
+		int mPosY{ };
 };
 
-class Player
+class Player : public Character
 {
 public:
-	Player(char player, int posX, int posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
-
-	enum class Direction
-	{
-		UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
-	};
-
-	int GetPositionX() const
-	{
-		return mPosX;
-	}
-
-	int GetPositionY() const
-	{
-		return mPosY;
-	}
-
-	char GetPlayerCharacter() const
-	{
-		return mPlayer;
-	}
-
-	void Movement(Player::Direction choice, MapGenerator& mapGenerator);
+	Player(const std::string& name, char character, int posX, int posY) : Character{name, character, posX, posY}
+	{}
 
 private:
-	const char mPlayer{ 'O' };
-	int mPosX{ };
-	int mPosY{ };
+
 };
 
-class Enemy
+class Enemy : public Character
 {
 	public:
-		Enemy();
+		Enemy(const std::string& name, char character, int posX, int posY): Character{name, character, posX, posY}
+		{}
 
-		void Move()
+		void Move(std::mt19937& mt, MapGenerator& mapGenerator)
 		{
+			//Randomize directions
+			std::uniform_int_distribution<> moveEnemy{ 1, 4};
 
+			Movement(static_cast<Character::Direction>(moveEnemy(mt)), mapGenerator);
 		}
 
 	private:
-		char mEnemy{ 'E' };
 };
+
 
 class MapGenerator
 {
-public:
-	MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
-		mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
+	public:
+		MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
+			mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
-	void InitializeMap(const Player& player)
-	{
-		mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-		mGameMap[player.GetPositionY()][player.GetPositionX()] = player.GetPlayerCharacter();
-	}
-
-	void DrawMap() const
-	{
-		for (const auto& row : mGameMap)
+		void InitializeMap(const Character& character)
 		{
-			for (const auto& column : row)
-			{
-				std::cout << column;
-			}
-			std::cout << '\n';
+			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
+			mGameMap[character.GetPositionY()][character.GetPositionX()] = character.GetCharacter();
 		}
-	}
 
-	void Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char player)
-	{
-		//std::cout << "old x: " << oldX << " - old Y:" << oldY << '\n';
-		mGameMap[oldY][oldX] = mMapTile;
-		mGameMap[newY][newX] = player;
-	}
+		void DrawMap() const
+		{
+			for (const auto& row : mGameMap)
+			{
+				for (const auto& column : row)
+				{
+					std::cout << column;
+				}
+				std::cout << '\n';
+			}
+		}
 
-	int MaxRows() const
-	{
-		return mGameMap.size();
-	}
+		void Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char character)
+		{
+			mGameMap[oldY][oldX] = mMapTile;
+			mGameMap[newY][newX] = character;
+		}
 
-	int MaxColumns() const
-	{
-		return !mGameMap.empty() ? mGameMap[0].size() : 0;
-	}
+		int MaxRows() const
+		{
+			return mGameMap.size();
+		}
 
-	void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Player& player)
-	{
+		int MaxColumns() const
+		{
+			return !mGameMap.empty() ? mGameMap[0].size() : 0;
+		}
+
+		void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Character& character)
+		{
 	
-		std::uniform_int_distribution<> rows{0, 19};
-		std::uniform_int_distribution<> columns{0, 49};
+			std::uniform_int_distribution<> rows{0, 19};
+			std::uniform_int_distribution<> columns{0, 49};
 
-		for (int i{ }; i < amountToPlace; ++i)
-		{
-			//Do not draw over player
-			if (rows(mt) != player.GetPositionX() && rows(mt) != player.GetPositionY() || columns(mt) != player.GetPositionX() && columns(mt) != player.GetPositionY())
+			for (int i{ }; i < amountToPlace; ++i)
 			{
-				mGameMap[rows(mt)][columns(mt)] = object;
+				//Do not draw over player
+				if (rows(mt) != character.GetPositionX() && rows(mt) != character.GetPositionY() || columns(mt) != character.GetPositionX() && columns(mt) != character.GetPositionY())
+				{
+					mGameMap[rows(mt)][columns(mt)] = object;
+				}
 			}
 		}
-	}
 
-private:
-	const std::string mMapName{ "Map Name" };
-	int mMapRows{ 5 };
-	int mMapColumns{ 5 };
-	const char mMapTile{ '+' };
-	std::vector<std::vector<char>> mGameMap;
-	char mTransitionTile{ 'H' };
-	char mObject{ '#'};
+	private:
+		const std::string mMapName{ "Map Name" };
+		int mMapRows{ 5 };
+		int mMapColumns{ 5 };
+		const char mMapTile{ '+' };
+		std::vector<std::vector<char>> mGameMap;
+		char mTransitionTile{ 'H' };
+		char mObject{ '#'};
 };
 
 
@@ -147,15 +154,18 @@ int main()
 {
 	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
 
-	Player Hero('O', 7, 5);
+	Player Hero("Hero", 'O', 5, 5);
+	Enemy Goblin("Goblin", 'X', 15, 15);
 	MapGenerator Field("Field", 20, 50, '-');
 
 	Field.InitializeMap(Hero);
-	Field.DrawObjects(mt, '&', 10, Hero);
+	Field.InitializeMap(Goblin);
+	//Field.DrawObjects(mt, '&', 10, Hero);
 
 	while (true)
 	{
 		Field.DrawMap();
+		Goblin.Move(mt, Field);
 
 		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
 
@@ -173,12 +183,12 @@ int main()
 	}
 }
 
-void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator) 
+void Character::Movement(Character::Direction choice, MapGenerator& mapGenerator)
 {
-	switch (choice) 
+	switch (choice)
 	{
 		case Direction::UP:
-			if (mPosY) 
+			if (mPosY)
 			{
 				//Initialize and set mPosY to the oldY. It can be used in the update 
 				//function
@@ -188,37 +198,38 @@ void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 				//const auto oldY{ mPosY };
 				//mPosY--;
 
-				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mPlayer);
+				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
 				return;
 			}
 			break;
 
 		case Direction::DOWN:
-			if (mPosY < mapGenerator.MaxRows() - 1) 
+			if (mPosY < mapGenerator.MaxRows() - 1)
 			{
 				const auto oldY{ mPosY++ };
 
-				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mPlayer);
+				mapGenerator.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
 				return;
 			}
 			break;
 
 		case Direction::LEFT:
-			if (mPosX) 
+			if (mPosX)
 			{
 				const auto oldX{ mPosX-- };
 
-				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mPlayer);
+				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
 				return;
 			}
 			break;
 
 		case Direction::RIGHT:
-			if (mPosX < mapGenerator.MaxColumns() - 1) 
+			if (mPosX < mapGenerator.MaxColumns() - 1)
 			{
 				const auto oldX{ mPosX++ };
 
-				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mPlayer);
+				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
+				mapGenerator.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
 				return;
 			}
 			break;
@@ -228,10 +239,7 @@ void Player::Movement(Player::Direction choice, MapGenerator& mapGenerator)
 			return;
 	}
 
-	DirectionalError();
-}
-
-void DirectionalError()
-{
 	std::cout << "Cannot go any further in this direction\n";
+	std::cout << GetName() << " tried to go " << " but couldnt!\n";
+
 }
