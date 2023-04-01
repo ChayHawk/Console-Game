@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.20
-// Version Date     : April 1st 2023 @ 3:09 AM
+// Version          : 0.1.0.21
+// Version Date     : April 1st 2023 @ 3:11 AM
 // Date Created     : 
-// Lines of Code    : 253
+// Lines of Code    : 236
 // Description      : 
 //============================================================================
 
@@ -26,25 +26,13 @@ class Character
 			UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
 		};
 
-		int GetPositionX() const
-		{
-			return mPosX;
-		}
+		int GetPositionX() const { return mPosX; }
 
-		int GetPositionY() const
-		{
-			return mPosY;
-		}
+		int GetPositionY() const { return mPosY; }
 
-		char GetCharacter() const
-		{
-			return mCharacter;
-		}
+		char GetCharacter() const { return mCharacter; }
 
-		std::string GetName() const
-		{
-			return mName;
-		}
+		std::string GetName() const { return mName; }
 
 		void Movement(Character::Direction choice, MapGenerator& mapGenerator);
 
@@ -61,9 +49,6 @@ class Player : public Character
 	public:
 		Player(const std::string& name, char character, int posX, int posY) : Character{name, character, posX, posY}
 		{}
-
-	private:
-
 };
 
 class Enemy : public Character
@@ -79,8 +64,6 @@ class Enemy : public Character
 
 			Movement(static_cast<Character::Direction>(moveEnemy(mt)), mapGenerator);
 		}
-
-	private:
 };
 
 class MapGenerator
