@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.22
-// Version Date     : April 1st 2023 @ 5:03 AM
+// Version          : 0.1.0.23
+// Version Date     : April 1st 2023 @ 8:30 AM
 // Date Created     : 
 // Lines of Code    : 232
 // Description      : 
@@ -181,7 +181,7 @@ void Character::Movement(Character::Direction choice, MapGenerator& mapGenerator
 		case Direction::UP:
 			if (mPosY)
 			{
-				//Initialize and set mPosY to the oldY. It can be used in the update 
+				//Initialize and set oldY to the mPosY. It can be used in the update 
 				//function
 				const auto oldY{ mPosY-- }; //This
 
