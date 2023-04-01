@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.23
-// Version Date     : April 1st 2023 @ 8:30 AM
+// Version          : 0.1.0.24
+// Version Date     : April 1st 2023 @ 8:57 AM
 // Date Created     : 
-// Lines of Code    : 232
+// Lines of Code    : 230
 // Description      : 
 //============================================================================
 
@@ -27,11 +27,8 @@ class Character
 		};
 
 		int GetPositionX() const { return mPosX; }
-
 		int GetPositionY() const { return mPosY; }
-
 		char GetCharacter() const { return mCharacter; }
-
 		std::string GetName() const { return mName; }
 
 		void Movement(Character::Direction choice, MapGenerator& mapGenerator);
@@ -113,12 +110,13 @@ class MapGenerator
 		void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Character& character)
 		{
 	
-			std::uniform_int_distribution<> rows{0, 19};
-			std::uniform_int_distribution<> columns{0, 49};
+			std::uniform_int_distribution<> rows{0, mMapRows - 1};
+			std::uniform_int_distribution<> columns{0, mMapColumns - 1};
 
 			for (int i{ }; i < amountToPlace; ++i)
 			{
-				//Do not draw over player
+				//if object is equal to the players position, do not draw it, we dont want an object
+				//to be drawn over the player.
 				if (rows(mt) != character.GetPositionX() && rows(mt) != character.GetPositionY() || columns(mt) != character.GetPositionX() && columns(mt) != character.GetPositionY())
 				{
 					mGameMap[rows(mt)][columns(mt)] = object;
