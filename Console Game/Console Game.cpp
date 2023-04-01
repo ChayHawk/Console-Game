@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.19
-// Version Date     : March 31th 2023 @ 4:52 PM
+// Version          : 0.1.0.20
+// Version Date     : April 1st 2023 @ 3:09 AM
 // Date Created     : 
-// Lines of Code    : 264
+// Lines of Code    : 253
 // Description      : 
 //============================================================================
 
@@ -16,15 +16,10 @@
 
 class MapGenerator;
 
-//==================================================
-//												  
-//CHARACTER CLASS								  
-//												  
-//==================================================
 class Character
 {
 	public:
-		Character(const std::string& name, char character, int posX, int posY) : mCharacter(character), mPosX(posX), mPosY(posY) {}
+		Character(const std::string& name, char character, int posX, int posY) : mName(name), mCharacter(character), mPosX(posX), mPosY(posY) {}
 
 		enum class Direction
 		{
@@ -46,7 +41,7 @@ class Character
 			return mCharacter;
 		}
 
-		std::string GetName()
+		std::string GetName() const
 		{
 			return mName;
 		}
@@ -60,18 +55,14 @@ class Character
 		int mPosY{ };
 };
 
-//==================================================
-//												  
-//PLAYER CLASS									  
-//												 
-//==================================================
+
 class Player : public Character
 {
-public:
-	Player(const std::string& name, char character, int posX, int posY) : Character{name, character, posX, posY}
-	{}
+	public:
+		Player(const std::string& name, char character, int posX, int posY) : Character{name, character, posX, posY}
+		{}
 
-private:
+	private:
 
 };
 
@@ -92,22 +83,24 @@ class Enemy : public Character
 	private:
 };
 
-
-//==================================================
-//												  
-//CMapGenerator CLASS							  
-//												  
-//==================================================
 class MapGenerator
 {
 	public:
 		MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
 			mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
-		void InitializeMap(const Character& character)
+		void InitializeMap(const std::vector<Character>& characters)
 		{
 			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-			mGameMap[character.GetPositionY()][character.GetPositionX()] = character.GetCharacter();
+
+			for (const auto& character : characters)
+			{
+				const int row{ character.GetPositionY() };
+				const int col{ character.GetPositionX() };
+				const char ch{ character.GetCharacter() };
+
+				mGameMap[row][col] = ch;
+			}
 		}
 
 		void DrawMap() const
@@ -128,12 +121,12 @@ class MapGenerator
 			mGameMap[newY][newX] = character;
 		}
 
-		int MaxRows() const
+		size_t MaxRows() const
 		{
 			return mGameMap.size();
 		}
 
-		int MaxColumns() const
+		size_t MaxColumns() const
 		{
 			return !mGameMap.empty() ? mGameMap[0].size() : 0;
 		}
@@ -169,16 +162,17 @@ int main()
 {
 	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
 
+	std::vector<Character> characterContainer;
+
 	Player Hero("Hero", 'O', 5, 5);
 	Enemy Goblin("Goblin", 'X', 15, 15);
 	MapGenerator Field("Field", 20, 50, '-');
 
-	//PROBLEM: Player is drawn before the enemy and enemy only 
-	//appears when player moves once. Could have something to do
-	//with the Update function.
-	Field.InitializeMap(Hero);
-	Field.InitializeMap(Goblin);
-	//Field.DrawObjects(mt, '&', 10, Hero);
+	characterContainer.push_back(Hero);
+	characterContainer.push_back(Goblin);
+
+	Field.InitializeMap(characterContainer);
+	Field.DrawObjects(mt, '&', 10, Hero);
 
 	while (true)
 	{
@@ -256,9 +250,4 @@ void Character::Movement(Character::Direction choice, MapGenerator& mapGenerator
 			std::cout << "Invalid Input\n";
 			return;
 	}
-
-	std::cout << "Cannot go any further in this direction\n";
-	//PROBLEM: GetName() returns default character name instead of actual characters name.
-	//TODO: Find a way to make it so Direction cna be converted to a string
-	std::cout << GetName() << " tried to go " << " but couldnt!\n";
 }
