@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.21
-// Version Date     : April 1st 2023 @ 3:11 AM
+// Version          : 0.1.0.22
+// Version Date     : April 1st 2023 @ 5:03 AM
 // Date Created     : 
-// Lines of Code    : 236
+// Lines of Code    : 232
 // Description      : 
 //============================================================================
 
@@ -72,17 +72,13 @@ class MapGenerator
 		MapGenerator(const std::string& mapName, int mapRows, int mapColumns, char mapTile) :
 			mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
 
-		void InitializeMap(const std::vector<Character>& characters)
+		void InitializeMap(const std::vector<Character>& character)
 		{
 			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
 
-			for (const auto& character : characters)
+			for (auto& i : character)
 			{
-				const int row{ character.GetPositionY() };
-				const int col{ character.GetPositionX() };
-				const char ch{ character.GetCharacter() };
-
-				mGameMap[row][col] = ch;
+				mGameMap[i.GetPositionY()][i.GetPositionX()] = i.GetCharacter();
 			}
 		}
 
