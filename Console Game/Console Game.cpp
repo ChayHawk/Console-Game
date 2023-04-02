@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.24
-// Version Date     : April 1st 2023 @ 8:57 AM
+// Version          : 0.1.0.25
+// Version Date     : April 2nd 2023 @ 5:14 AM
 // Date Created     : 
-// Lines of Code    : 230
+// Lines of Code    : 245
 // Description      : 
 //============================================================================
 
@@ -15,6 +15,7 @@
 #include <chrono>
 
 class MapGenerator;
+class Collision;
 
 class Character
 {
@@ -107,7 +108,7 @@ class MapGenerator
 			return !mGameMap.empty() ? mGameMap[0].size() : 0;
 		}
 
-		void DrawObjects(std::mt19937& mt, char object, int amountToPlace, const Character& character)
+		void DrawObjects(std::mt19937& mt, char object, int amountToPlace, Character& character)
 		{
 	
 			std::uniform_int_distribution<> rows{0, mMapRows - 1};
@@ -134,6 +135,20 @@ class MapGenerator
 		char mObject{ '#'};
 };
 
+
+class Collision
+{
+	public:
+		Collision();
+
+		bool IsColliding()
+		{
+
+		}
+
+	private:
+
+};
 
 int main()
 {
