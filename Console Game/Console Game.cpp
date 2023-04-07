@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.26
-// Version Date     : April 7nd 2023 @ 8:32 AM
+// Version          : 0.1.0.27
+// Version Date     : April 7nd 2023 @ 9:11 AM
 // Date Created     : 
 // Lines of Code    : 263
 // Description      : 
@@ -28,8 +28,8 @@ class Character
 			UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
 		};
 
-		int GetPositionX() const { return mPosX; }
-		int GetPositionY() const { return mPosY; }
+		int GetXPosition() const { return mPosX; }
+		int GetYPosition() const { return mPosY; }
 		char GetCharacter() const { return mCharacter; }
 		std::string GetName() const { return mName; }
 
@@ -104,7 +104,7 @@ class Map
 
 			for (auto& i : character)
 			{
-				mGameMap[i.GetPositionY()][i.GetPositionX()] = i.GetCharacter();
+				mGameMap[i.GetYPosition()][i.GetXPosition()] = i.GetCharacter();
 			}
 		}
 
@@ -146,7 +146,7 @@ class Map
 			{
 				//if object is equal to the players position, do not draw it, we dont want an object
 				//to be drawn over the player.
-				if (rows(mt) != character.GetPositionX() && rows(mt) != character.GetPositionY() || columns(mt) != character.GetPositionX() && columns(mt) != character.GetPositionY())
+				if (rows(mt) != character.GetXPosition() && rows(mt) != character.GetYPosition() || columns(mt) != character.GetXPosition() && columns(mt) != character.GetYPosition())
 				{
 					mGameMap[rows(mt)][columns(mt)] = tile.GetTile();
 				}
@@ -196,7 +196,7 @@ int main()
 		Field.DrawMap();
 		Goblin.Move(mt, Field);
 
-		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
+		std::cout << "X: " << Hero.GetXPosition() << " Y: " << Hero.GetYPosition() << "\n\n";
 
 		std::cout << "What do you want to do?\n\n";
 
