@@ -25,7 +25,7 @@ class Character
 
 		void Movement(Character::Direction choice, Map& map);
 
-		void GetDirection(const Map& map);
+		void GetDirection(int playerX, int playerY, int oldX, int oldY);
 
 	private:
 		std::string mName{ "Character" };

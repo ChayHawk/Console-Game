@@ -1,23 +1,26 @@
 #include "Character.h"
 
-void Character::GetDirection(const Map& map)
+void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 {
-	std::cout << mPosY << " " << mPosY + 1;
-	if (mPosY < map.GetMaxColumns())
+	if (playerX == oldX && playerY == oldY)
 	{
-		std::cout << "Moving Up\n";
+		std::cout << "Player is not moving.\n";
 	}
-	else if (mPosY > mPosY - 1)
+	else if (playerX == oldX && playerY < oldY)
 	{
-		std::cout << "Moving Down\n";
+		std::cout << "Player is moving up.\n";
 	}
-	else if (mPosX == mPosX - 1)
+	else if (playerX == oldX && playerY > oldY)
 	{
-		std::cout << "Moving Left\n";
+		std::cout << "Player is moving down.\n";
 	}
-	else if (mPosX == mPosX + 1)
+	else if (playerY == oldY && playerX < oldX)
 	{
-		std::cout << "Moving Right\n";
+		std::cout << "Player is moving left.\n";
+	}
+	else if (playerY == oldY && playerX > oldX)
+	{
+		std::cout << "Player is moving right.\n";
 	}
 }
 
