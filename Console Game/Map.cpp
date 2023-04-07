@@ -10,7 +10,7 @@ void Map::Initialize(const std::vector<Character>& character)
 	}
 }
 
-void Map::DrawMap() const
+void Map::Draw() const
 {
 	for (const auto& row : mGameMap)
 	{

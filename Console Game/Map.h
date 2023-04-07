@@ -21,7 +21,7 @@ class Map
 
 		void Initialize(const std::vector<Character>& character);
 
-		void DrawMap() const;
+		void Draw() const;
 
 		void Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char character);
 

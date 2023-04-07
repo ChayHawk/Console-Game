@@ -7,20 +7,11 @@ class Tiles
 		Tiles(char tile) : mTile(tile)
 		{}
 
-		int GetXPosition() const
-		{
-			return mXpos;
-		}
+		int GetXPosition() const;
 
-		int GetYPosition() const
-		{
-			return mYPos;
-		}
+		int GetYPosition() const;
 
-		char GetTile() const
-		{
-			return mTile;
-		}
+		char GetTile() const;
 
 	private:
 		char mTile{ 'X' };
