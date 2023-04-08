@@ -6,20 +6,20 @@ Collision::Collision()
 }
 
 //This does not yet check for map bound collision
-//bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles)
-//{
-//    for (auto& i : tiles)
-//    {
-//        if (playerX == i.GetXPosition() || playerY == i.GetYPosition())
-//        {
-//            std::cout << "Collision Detected\n";
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-
-bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles) 
+bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles)
 {
-    return std::ranges::any_of(tiles, [playerX, playerY](const auto& t) {return t.GetXPosition() == playerX || t.GetYPosition() == playerY; });
+    for (auto& i : tiles)
+    {
+        if (playerX == i.GetXPosition() == playerX && playerY == i.GetYPosition())
+        {
+            std::cout << "Collision Detected\n";
+            return true;
+        }
+    }
+    return false;
 }
+
+//bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles) 
+//{
+//    return std::ranges::any_of(tiles, [playerX, playerY](const auto& t) {return t.GetXPos() == playerX || t.GetYPos() == playerY; });
+//}
