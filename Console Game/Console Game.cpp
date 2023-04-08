@@ -1,104 +1,65 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0
-// Version Date     : March 25th 2023 @ 6:01 AM
+// Version          : 0.1.0.30
+// Version Date     : April 7th 2023 @ 4:25 PM
 // Date Created     : 
-// Lines of Code    : 169
+// Lines of Code    : 371
 // Description      : 
 //============================================================================
 
 #include <iostream>
 #include <vector>
+#include <string>
+#include <random>
+#include <chrono>
 
-void DirectionalError();
+#include "Character.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Tiles.h"
+#include "Map.h"
+#include "Collision.h"
 
-class Map 
+int main()
 {
-	public:
-		Map(const std::string& mapName, size_t mapRows, size_t mapColumns, char mapTile) :
-			mMapName(mapName), mMapRows(mapRows), mMapColumns(mapColumns), mMapTile(mapTile) {}
+	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
 
-		void InitializeMap() 
-		{
-			mGameMap.assign(mMapRows, std::vector<char>(mMapColumns, mMapTile));
-		}
+	std::vector<Character> characterContainer;
 
-		void DrawMap(size_t posX, size_t posY, char player) 
-		{
-			for (size_t row{}; row < mMapRows; ++row) 
-			{
-				for (size_t col{}; col < mMapColumns; ++col) 
-				{
-					mGameMap[row][col] = mMapTile;
-					mGameMap[posY][posX] = player;
+	Player Hero("Hero", 'O', 5, 5);
+	Enemy Goblin("Goblin", 'X', 15, 15);
+	Map Field("Field", 20, 50, '-');
 
-					std::cout << mGameMap[row][col];
-				}
-				std::cout << '\n';
-			}
-		}
+	characterContainer.push_back(Hero);
+	characterContainer.push_back(Goblin);
 
-		size_t maxRow() const 
-		{
-			return mGameMap.size();
-		}
+	std::vector<Tiles> tileContainer;
 
-		size_t maxCol() const 
-		{
-			return !mGameMap.empty() ? mGameMap[0].size() : 0;
-		}
+	Tiles Rock('&');
+	Tiles Tree('T');
 
-	private:
-		const std::string mMapName{ "Map Name" };
-		size_t mMapRows{ 5 };
-		size_t mMapColumns{ 5 };
-		const char mMapTile{ '+' };
-		const char mMapTransition{ 'Z' }; //UNUSED: Transition from one map to another whn player touches this
-		std::vector<std::vector<char>> mGameMap;
-};
+	tileContainer.push_back(Rock);
+	tileContainer.push_back(Tree);
 
-//Can promote to a character class when i learn virtual, then inherit from there.
-class Player 
-{
-	public:
-		Player(char player, size_t posX, size_t posY) : mPlayer(player), mPosX(posX), mPosY(posY) {}
+	Field.Initialize(characterContainer);
+	Field.DrawRandomObjects(mt, Rock, 10, Hero);
 
-		size_t GetPositionX() const 
-		{
-			return mPosX;
-		}
+	int oldX{ Hero.GetXPosition()};
+	int oldY{ Hero.GetYPosition()};
 
-		size_t GetPositionY() const 
-		{
-			return mPosY;
-		}
-
-		char GetPlayerSprite() const 
-		{
-			return mPlayer;
-		}
-
-		void Movement(int choice, Map);
-
-	private:
-		const char mPlayer{ 'O' };
-		size_t mPosX{ };
-		size_t mPosY{ };
-};
-
-int main() 
-{
-	Player Hero('O', 7, 5);
-	Map Courtyard("Courtyard", 20, 50, '-');
-
-	Courtyard.InitializeMap();
-
-	while (true) 
+	while (true)
 	{
-		Courtyard.DrawMap(Hero.GetPositionX(), Hero.GetPositionY(), Hero.GetPlayerSprite());
+		Field.Draw();
+		Goblin.Move(mt, Field);
 
-		std::cout << "X: " << Hero.GetPositionX() << " Y: " << Hero.GetPositionY() << "\n\n";
+		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
+		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
+
+		Hero.GetDirection(Hero.GetXPosition(), Hero.GetYPosition(), oldX, oldY);
+
+		oldX = Hero.GetXPosition();
+		oldY = Hero.GetYPosition();
 
 		std::cout << "What do you want to do?\n\n";
 
@@ -110,60 +71,7 @@ int main()
 		int choice{ };
 
 		std::cin >> choice;
-		Hero.Movement(choice, Courtyard);
+
+		Hero.Movement(static_cast<Player::Direction>(choice), Field);
 	}
-}
-
-void Player::Movement(int choice, Map map) 
-{
-	enum class Direction 
-	{
-		UP = 1, DOWN = 2, LEFT = 3, RIGHT = 4
-	};
-
-	switch (choice) 
-	{
-		case static_cast<int>(Direction::UP):
-			if (mPosY) 
-			{
-				--mPosY;
-				return;
-			}
-			break;
-
-		case static_cast<int>(Direction::DOWN):
-			if (mPosY < map.maxRow() - 1) 
-			{
-				++mPosY;
-				return;
-			}
-			break;
-
-		case static_cast<int>(Direction::LEFT):
-			if (mPosX) 
-			{
-				--mPosX;
-				return;
-			}
-			break;
-
-		case static_cast<int>(Direction::RIGHT):
-			if (mPosX < map.maxCol() - 1) 
-			{
-				++mPosX;
-				return;
-			}
-			break;
-
-		default:
-			std::cout << "Invalid Input\n";
-			return;
-	}
-
-	DirectionalError();
-}
-
-void DirectionalError() 
-{
-	std::cout << "Cannot go any further in this direction\n";
 }
