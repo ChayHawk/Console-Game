@@ -73,64 +73,64 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 	//	std::cout << "Invalid Input\n";
 	//	return;
 	//}
-	std::cout << "Inside Character::Movement Function\n";
+
+
 	//Testing
 	switch (choice)
 	{
-	case Direction::UP:
-		if (collision.CheckCollision(mPosX, mPosY, tiles))
-		{
-			std::cout << "Cannot move Up.\n";
-		}
-		else
-		{
-			std::cout << "Inside Switch UP Case Function\n";
-			const auto oldY{ mPosY-- };
+		case Direction::UP:
+			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			{
+				std::cout << "Cannot move Up.\n";
+			}
+			else
+			{
+				const auto oldY{ mPosY-- };
 
-			map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
-			return;
-		}
-		break;
-	case Direction::DOWN:
-		if (collision.CheckCollision(mPosX, mPosY, tiles))
-		{
-			std::cout << "Cannot move Down.\n";
-		}
-		else
-		{
-			const auto oldY{ mPosY++ };
+				map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
+				return;
+			}
+			break;
+		case Direction::DOWN:
+			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			{
+				std::cout << "Cannot move Down.\n";
+			}
+			else
+			{
+				const auto oldY{ mPosY++ };
 
-			map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
-			return;
-		}
-		break;
-	case Direction::LEFT:
-		if (collision.CheckCollision(mPosX, mPosY, tiles))
-		{
-			std::cout << "Cannot move Left.\n";
-		}
-		else
-		{
-			const auto oldX{ mPosX-- };
+				map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
+				return;
+			}
+			break;
+		case Direction::LEFT:
+			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			{
+				std::cout << "Cannot move Left.\n";
+			}
+			else
+			{
+				const auto oldX{ mPosX-- };
 
-			map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
-			return;
-		}
-		break;
-	case Direction::RIGHT:
-		if (collision.CheckCollision(mPosX , mPosY, tiles))
-		{
-			std::cout << "Cannot move Right.\n";
-		}
-		else
-		{
-			const auto oldX{ mPosX++ };
+				map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
+				return;
+			}
+			break;
+		case Direction::RIGHT:
+			if (collision.CheckCollision(mPosX , mPosY, tiles))
+			{
+				std::cout << "Cannot move Right.\n";
+			}
+			else
+			{
+				const auto oldX{ mPosX++ };
 
-			map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
-			return;
-		}
-		break;
-	default:
-		std::cout << "Error\n";
+				map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
+				return;
+			}
+			break;
+		default:
+			std::cout << "Error\n";
 	}
 }
