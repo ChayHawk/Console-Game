@@ -91,6 +91,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
+
 		case Direction::DOWN:
 			if (collision.CheckCollision(mPosX, mPosY, tiles))
 			{
@@ -104,6 +105,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
+
 		case Direction::LEFT:
 			if (collision.CheckCollision(mPosX, mPosY, tiles))
 			{
@@ -117,6 +119,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
+
 		case Direction::RIGHT:
 			if (collision.CheckCollision(mPosX , mPosY, tiles))
 			{
@@ -130,6 +133,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
+
 		default:
 			std::cout << "Error\n";
 	}
