@@ -14,18 +14,20 @@
 #include <random>
 #include <chrono>
 
+#include "Collision.h"
 #include "Character.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Tiles.h"
 #include "Map.h"
-#include "Collision.h"
 
 int main()
 {
 	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
 
 	std::vector<Character> characterContainer;
+
+	Collision collision;
 
 	Player Hero("Hero", 'O', 5, 5);
 	Enemy Goblin("Goblin", 'X', 15, 15);
@@ -51,7 +53,7 @@ int main()
 	while (true)
 	{
 		Field.Draw();
-		Goblin.Move(mt, Field);
+		Goblin.Move(mt, collision, Field, tileContainer);
 
 		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
@@ -72,6 +74,6 @@ int main()
 
 		std::cin >> choice;
 
-		Hero.Movement(static_cast<Player::Direction>(choice), Field);
+		Hero.Movement(static_cast<Player::Direction>(choice), collision, Field, tileContainer);
 	}
 }
