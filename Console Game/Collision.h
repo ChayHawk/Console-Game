@@ -10,7 +10,7 @@ class Collision
 	public:
 		Collision();
 
-		bool CheckCollision(int playerX, int playerY, std::vector<Tiles> tiles);
+		bool CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles);
 };
 
 #endif

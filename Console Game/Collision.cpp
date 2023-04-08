@@ -5,7 +5,7 @@ Collision::Collision()
 
 }
 
-bool Collision::CheckCollision(int playerX, int playerY, std::vector<Tiles> tiles)
+bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles)
 {
     for (auto& i : tiles)
     {

@@ -26,6 +26,7 @@ void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 
 void Character::Movement(Character::Direction choice, Collision& collision, Map& map, std::vector<Tiles> tiles)
 {
+	//Working Master do not delete
 	//switch (choice)
 	//{
 	//case Direction::UP:
@@ -73,6 +74,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 	//	return;
 	//}
 
+	//Testing
 	switch (choice)
 	{
 	case Direction::UP:
