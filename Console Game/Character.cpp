@@ -24,7 +24,7 @@ void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 	}
 }
 
-void Character::Movement(Character::Direction choice, Collision& collision, Map& map, std::vector<Tiles> tiles)
+void Character::Movement(Character::Direction choice, Collision& collision, Map& map, const std::vector<Tiles>& tiles)
 {
 	//Working Master do not delete
 	//switch (choice)
@@ -73,48 +73,61 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 	//	std::cout << "Invalid Input\n";
 	//	return;
 	//}
-
+	std::cout << "Inside Character::Movement Function\n";
 	//Testing
 	switch (choice)
 	{
 	case Direction::UP:
-		if (collision.CheckCollision(mPosX, mPosY - 1, tiles))
+		if (collision.CheckCollision(mPosX, mPosY, tiles))
 		{
 			std::cout << "Cannot move Up.\n";
 		}
 		else
 		{
-			--mPosY;
+			std::cout << "Inside Switch UP Case Function\n";
+			const auto oldY{ mPosY-- };
+
+			map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
+			return;
 		}
 		break;
 	case Direction::DOWN:
-		if (collision.CheckCollision(mPosX, mPosY + 1, tiles))
+		if (collision.CheckCollision(mPosX, mPosY, tiles))
 		{
 			std::cout << "Cannot move Down.\n";
 		}
 		else
 		{
-			++mPosY;
+			const auto oldY{ mPosY++ };
+
+			map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
+			return;
 		}
 		break;
 	case Direction::LEFT:
-		if (collision.CheckCollision(mPosX - 1, mPosY, tiles))
+		if (collision.CheckCollision(mPosX, mPosY, tiles))
 		{
 			std::cout << "Cannot move Left.\n";
 		}
 		else
 		{
-			--mPosX;
+			const auto oldX{ mPosX-- };
+
+			map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
+			return;
 		}
 		break;
 	case Direction::RIGHT:
-		if (collision.CheckCollision(mPosX + 1, mPosY, tiles))
+		if (collision.CheckCollision(mPosX , mPosY, tiles))
 		{
 			std::cout << "Cannot move Right.\n";
 		}
 		else
 		{
-			++mPosX;
+			const auto oldX{ mPosX++ };
+
+			map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
+			return;
 		}
 		break;
 	default:

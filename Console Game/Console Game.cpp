@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.30
-// Version Date     : April 7th 2023 @ 4:25 PM
+// Version          : 0.1.0.31
+// Version Date     : April 8th 2023 @ 7:59 AM
 // Date Created     : 
 // Lines of Code    : 371
 // Description      : 
@@ -31,7 +31,7 @@ int main()
 
 	Player Hero("Hero", 'O', 5, 5);
 	Enemy Goblin("Goblin", 'X', 15, 15);
-	Map Field("Field", 20, 50, '-');
+	Map Field("Field", 20, 50, '.');
 
 	characterContainer.push_back(Hero);
 	characterContainer.push_back(Goblin);
@@ -45,7 +45,7 @@ int main()
 	tileContainer.push_back(Tree);
 
 	Field.Initialize(characterContainer);
-	Field.DrawRandomObjects(mt, Rock, 10, Hero);
+	Field.DrawRandomObjects(mt, tileContainer, 10, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};

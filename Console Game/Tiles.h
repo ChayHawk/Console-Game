@@ -8,9 +8,7 @@ class Tiles
 		{}
 
 		int GetXPosition() const;
-
 		int GetYPosition() const;
-
 		char GetTile() const;
 
 	private:

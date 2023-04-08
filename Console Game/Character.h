@@ -25,7 +25,7 @@ class Character
 		char GetCharacter() const { return mCharacter; }
 		std::string GetName() const { return mName; }
 
-		void Movement(Character::Direction choice, Collision& collision, Map& map, std::vector<Tiles> tiles);
+		void Movement(Character::Direction choice, Collision& collision, Map& map, const std::vector<Tiles>& tiles);
 
 		void GetDirection(int playerX, int playerY, int oldX, int oldY);
 

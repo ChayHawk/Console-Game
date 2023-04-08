@@ -38,7 +38,7 @@ size_t Map::GetMaxColumns() const
 	return !mGameMap.empty() ? mGameMap[0].size() : 0;
 }
 
-void Map::DrawRandomObjects(std::mt19937& mt, const Tiles& tile, int amountToPlace, Character& character)
+void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character)
 {
 
 	std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
@@ -50,7 +50,10 @@ void Map::DrawRandomObjects(std::mt19937& mt, const Tiles& tile, int amountToPla
 		//to be drawn over the player.
 		if (rows(mt) != character.GetXPosition() && rows(mt) != character.GetYPosition() || columns(mt) != character.GetXPosition() && columns(mt) != character.GetYPosition())
 		{
-			mGameMap[rows(mt)][columns(mt)] = tile.GetTile();
+			for (auto& i : tiles)
+			{
+				mGameMap[rows(mt)][columns(mt)] = i.GetTile();
+			}
 		}
 	}
 }
