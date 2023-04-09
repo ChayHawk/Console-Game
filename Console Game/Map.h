@@ -32,18 +32,9 @@ class Map
 
 		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
 
-		auto GetTileCoords()
-		{
-			return mTileCoords;
-		}
+		auto GetTileCoords();
 
-		void DEBUG_DisplayTileCoords()
-		{
-			for (const auto& coord : mTileCoords)
-			{
-				std::cout << "First: " << coord.first << ", Second: " << coord.second << std::endl;
-			}
-		}
+		void DEBUG_DisplayTileCoords();
 
 	private:
 		const std::string mMapName{ "Map Name" };

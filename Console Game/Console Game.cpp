@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.39
-// Version Date     : April 9th 2023 @ 1:20 AM
+// Version          : 0.1.0.40
+// Version Date     : April 9th 2023 @ 1:27 AM
 // Date Created     : 
 // Lines of Code    : 448
 // Description      : 
@@ -45,7 +45,7 @@ int main()
 	tileContainer.push_back(Tree);
 
 	Field.Initialize(characterContainer);
-	Field.DrawRandomObjects(mt, tileContainer, 10, Hero);
+	Field.DrawRandomObjects(mt, tileContainer, 30, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
