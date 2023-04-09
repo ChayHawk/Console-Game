@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.35
-// Version Date     : April 8th 2023 @ 10:20 PM
+// Version          : 0.1.0.36
+// Version Date     : April 8th 2023 @ 10:35 PM
 // Date Created     : 
-// Lines of Code    : 371
+// Lines of Code    : 488
 // Description      : 
 //============================================================================
 
@@ -45,14 +45,14 @@ int main()
 	tileContainer.push_back(Tree);
 
 	Field.Initialize(characterContainer);
-	//Field.DrawRandomObjects(mt, tileContainer, 10, Hero);
+	Field.DrawRandomObjects(mt, tileContainer, 10, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
 
 	while (true)
 	{
-		Field.DrawObject(Rock, Rock.GetXPosition(), Rock.GetYPosition());
+		//Field.DrawObject(Rock, Rock.GetXPosition(), Rock.GetYPosition());
 		Field.Draw();
 		Goblin.Move(mt, collision, Field, tileContainer);
 

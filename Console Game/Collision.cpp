@@ -6,6 +6,7 @@ Collision::Collision()
 }
 
 //This does not yet check for map bound collision
+//This doesw not get the positions of the randomized obects placed on the screen yet.
 bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles>& tiles)
 {
     for (auto& i : tiles)

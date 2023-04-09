@@ -58,6 +58,7 @@ void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, i
 	}
 }
 
+//Test Function, delete later
 void Map::DrawObject(Tiles& tiles, int tileX, int tileY)
 {
 	mGameMap[tileY][tileX] = tiles.GetTile();
