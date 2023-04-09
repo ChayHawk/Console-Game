@@ -1,0 +1,12 @@
+TODO
+
+1. Try to implement some kind of path finding for AI.
+2. Implement an inventory for player
+
+
+============================================================================================================================================
+CLASS IMPLEMENTATIONS
+	
+Item Class
+Shop Class
+Attack Class
