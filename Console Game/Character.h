@@ -13,7 +13,8 @@ class Collision;
 class Character
 {
 	public:
-		Character(const std::string& name, char character, int posX, int posY) : mName(name), mCharacter(character), mPosX(posX), mPosY(posY) {}
+		Character(const std::string& name, char character, int posX, int posY) : 
+			mName(name), mCharacter(character), mPosX(posX), mPosY(posY) {}
 
 		enum class Direction
 		{

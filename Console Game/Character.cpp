@@ -2,15 +2,15 @@
 
 void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 {
-	if (playerX == oldX && playerY == oldY)
+	if (playerY == oldY && playerX == oldX)
 	{
 		std::cout << "Player is not moving.\n";
 	}
-	else if (playerX == oldX && playerY < oldY)
+	else if (playerY < oldY && playerX == oldX)
 	{
 		std::cout << "Player is moving up.\n";
 	}
-	else if (playerX == oldX && playerY > oldY)
+	else if (playerY > oldY && playerX == oldX)
 	{
 		std::cout << "Player is moving down.\n";
 	}
@@ -83,7 +83,6 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
-
 		default:
 			std::cout << "Error\n";
 	}
