@@ -54,7 +54,7 @@ int main()
 	{
 		//Field.DrawObject(Rock, Rock.GetXPosition(), Rock.GetYPosition());
 		Field.Draw();
-		Goblin.Move(mt, collision, Field, tileContainer);
+		Goblin.Move(mt, collision, Field);
 
 		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
@@ -75,6 +75,6 @@ int main()
 
 		std::cin >> choice;
 
-		Hero.Movement(static_cast<Player::Direction>(choice), collision, Field, tileContainer);
+		Hero.Movement(static_cast<Player::Direction>(choice), collision, Field);
 	}
 }

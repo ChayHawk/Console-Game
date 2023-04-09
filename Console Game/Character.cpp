@@ -24,62 +24,12 @@ void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 	}
 }
 
-void Character::Movement(Character::Direction choice, Collision& collision, Map& map, const std::vector<Tiles>& tiles)
+void Character::Movement(Character::Direction choice, Collision& collision, Map& map)
 {
-	//Working Master do not delete
-	//switch (choice)
-	//{
-	//case Direction::UP:
-	//	if (mPosY)
-	//	{
-	//		const auto oldY{ mPosY-- }; //This
-
-	//		map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
-	//		return;
-	//	}
-	//	break;
-
-	//case Direction::DOWN:
-	//	if (mPosY < map.GetMaxRows() - 1)
-	//	{
-	//		const auto oldY{ mPosY++ };
-
-	//		map.Update(mPosX, oldY, mPosX, mPosY, mCharacter);
-	//		return;
-	//	}
-	//	break;
-
-	//case Direction::LEFT:
-	//	if (mPosX)
-	//	{
-	//		const auto oldX{ mPosX-- };
-
-	//		map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
-	//		return;
-	//	}
-	//	break;
-
-	//case Direction::RIGHT:
-	//	if (mPosX < map.GetMaxColumns() - 1)
-	//	{
-	//		const auto oldX{ mPosX++ };
-
-	//		map.Update(oldX, mPosY, mPosX, mPosY, mCharacter);
-	//		return;
-	//	}
-	//	break;
-
-	//default:
-	//	std::cout << "Invalid Input\n";
-	//	return;
-	//}
-
-
-	//Testing
 	switch (choice)
 	{
 		case Direction::UP:
-			if (collision.CheckCollision(mPosX, mPosY - 1, tiles))
+			if (collision.CheckCollision(mPosX, mPosY - 1, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Up.\n";
 			}
@@ -93,7 +43,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::DOWN:
-			if (collision.CheckCollision(mPosX, mPosY + 1, tiles))
+			if (collision.CheckCollision(mPosX, mPosY + 1, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Down.\n";
 			}
@@ -107,7 +57,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::LEFT:
-			if (collision.CheckCollision(mPosX - 1, mPosY, tiles))
+			if (collision.CheckCollision(mPosX - 1, mPosY, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Left.\n";
 			}
@@ -121,7 +71,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::RIGHT:
-			if (collision.CheckCollision(mPosX + 1 , mPosY, tiles))
+			if (collision.CheckCollision(mPosX + 1 , mPosY, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Right.\n";
 			}
