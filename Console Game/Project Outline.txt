@@ -2,6 +2,8 @@ TODO
 
 1. Try to implement some kind of path finding for AI.
 2. Implement an inventory for player
+3. Implement a way for the players direction to be visually seen, could use ^v><. The only one that doesnt really work is the ^
+   character. I may need to use an ASCII character to represent the player.
 
 
 ============================================================================================================================================
@@ -10,3 +12,7 @@ CLASS IMPLEMENTATIONS
 Item Class
 Shop Class
 Attack Class
+
+NOTES:
+
+1. Need to figure out where a path finding function would go. Character? Enemy?
