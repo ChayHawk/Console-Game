@@ -50,8 +50,8 @@ void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, i
         int row = rows(mt);
         int col = columns(mt);
 
-        // If the object is equal to the player's position, do not draw it, we don't want an object
-        // to be drawn over the player.
+        // If the object is equal to a characters position, do not draw it, we don't want an object
+        // to be drawn over characters.
         if ((row != character.GetXPosition() || col != character.GetYPosition()) &&
             (col != character.GetXPosition() || row != character.GetYPosition()))
         {
