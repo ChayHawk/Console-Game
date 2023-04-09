@@ -32,7 +32,7 @@ class Map
 
 		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
 
-		auto GetTileCoords();
+		std::vector<std::pair<int, int>> GetTileCoords();
 
 		void DEBUG_DisplayTileCoords();
 

@@ -35,7 +35,14 @@ size_t Map::GetMaxRows() const
 
 size_t Map::GetMaxColumns() const
 {
-	return !mGameMap.empty() ? mGameMap[0].size() : 0;
+    if (!mGameMap.empty()) 
+    {
+        return mGameMap[0].size();
+    }
+    else 
+    {
+        return 0;
+    }
 }
 
 //Need to find a way to make this draw different amounts of each object. Could replace amountToPlace with a vector,
@@ -66,7 +73,7 @@ void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, i
     }
 }
 
-auto Map::GetTileCoords()
+std::vector<std::pair<int, int>> Map::GetTileCoords()
 {
 	return mTileCoords;
 }

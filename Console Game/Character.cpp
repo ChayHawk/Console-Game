@@ -83,7 +83,6 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 				return;
 			}
 			break;
-
 		default:
 			std::cout << "Error\n";
 	}
