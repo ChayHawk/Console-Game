@@ -30,7 +30,7 @@ class Map
 
 		size_t GetMaxColumns() const;
 
-		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
+		void DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character);
 
 		std::vector<std::pair<int, int>> GetTileCoords();
 

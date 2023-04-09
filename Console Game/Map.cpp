@@ -47,7 +47,7 @@ size_t Map::GetMaxColumns() const
 
 //Need to find a way to make this draw different amounts of each object. Could replace amountToPlace with a vector,
 //Or make the tiles vector just a tile and place multiple of the function for each object.
-void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character)
+void Map::DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character)
 {
     std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
     std::uniform_int_distribution<> columns{ 0, mMapColumns - 1 };
@@ -65,10 +65,7 @@ void Map::DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, i
             // Store tile coordinates here so we can use them later
             mTileCoords.push_back(std::make_pair(row, col));
 
-            for (auto& j : tiles)
-            {
-                mGameMap[row][col] = j.GetTile();
-            }
+            mGameMap[row][col] = tiles.GetTile();
         }
     }
 }

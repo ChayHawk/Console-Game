@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.41
-// Version Date     : April 9th 2023 @ 9:09 AM
+// Version          : 0.1.0.42
+// Version Date     : April 9th 2023 @ 9:20 AM
 // Date Created     : 
 // Lines of Code    : 448
 // Description      : 
@@ -36,16 +36,12 @@ int main()
 	characterContainer.push_back(Hero);
 	characterContainer.push_back(Goblin);
 
-	std::vector<Tiles> tileContainer;
-
 	Tiles Rock('&');
 	Tiles Tree('T');
 
-	tileContainer.push_back(Rock);
-	tileContainer.push_back(Tree);
-
 	Field.Initialize(characterContainer);
-	Field.DrawRandomObjects(mt, tileContainer, 30, Hero);
+	Field.DrawRandomObjects(mt, Rock, 50, Hero);
+	Field.DrawRandomObjects(mt, Tree, 50, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
