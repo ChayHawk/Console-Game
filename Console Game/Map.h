@@ -31,6 +31,8 @@ class Map
 
 		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
 
+		void DrawObject(Tiles& tiles, int tileX, int tileY);
+
 	private:
 		const std::string mMapName{ "Map Name" };
 		int mMapRows{ 5 };

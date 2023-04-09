@@ -79,7 +79,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 	switch (choice)
 	{
 		case Direction::UP:
-			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			if (collision.CheckCollision(mPosX, mPosY - 1, tiles))
 			{
 				std::cout << "Cannot move Up.\n";
 			}
@@ -93,7 +93,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::DOWN:
-			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			if (collision.CheckCollision(mPosX, mPosY + 1, tiles))
 			{
 				std::cout << "Cannot move Down.\n";
 			}
@@ -107,7 +107,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::LEFT:
-			if (collision.CheckCollision(mPosX, mPosY, tiles))
+			if (collision.CheckCollision(mPosX - 1, mPosY, tiles))
 			{
 				std::cout << "Cannot move Left.\n";
 			}
@@ -121,7 +121,7 @@ void Character::Movement(Character::Direction choice, Collision& collision, Map&
 			break;
 
 		case Direction::RIGHT:
-			if (collision.CheckCollision(mPosX , mPosY, tiles))
+			if (collision.CheckCollision(mPosX + 1 , mPosY, tiles))
 			{
 				std::cout << "Cannot move Right.\n";
 			}

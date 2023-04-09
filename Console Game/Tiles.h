@@ -4,7 +4,7 @@
 class Tiles
 {
 	public:
-		Tiles(char tile) : mTile(tile)
+		Tiles(char tile, int xPos, int yPos) : mTile(tile), mXpos(xPos), mYpos(yPos)
 		{}
 
 		int GetXPosition() const;
@@ -14,7 +14,7 @@ class Tiles
 	private:
 		char mTile{ 'X' };
 		int mXpos{ 0 };
-		int mYPos{ 0 };
+		int mYpos{ 0 };
 };
 
 #endif
