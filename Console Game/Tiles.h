@@ -7,6 +7,9 @@ class Tiles
 		Tiles(char tile, int xPos, int yPos) : mTile(tile), mXpos(xPos), mYpos(yPos)
 		{}
 
+		Tiles(char tile) : mTile(tile)
+		{}
+
 		int GetXPosition() const;
 		int GetYPosition() const;
 		char GetTile() const;

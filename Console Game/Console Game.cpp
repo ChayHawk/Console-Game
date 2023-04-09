@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.36
-// Version Date     : April 8th 2023 @ 10:35 PM
+// Version          : 0.1.0.37
+// Version Date     : April 8th 2023 @ 10:40 PM
 // Date Created     : 
 // Lines of Code    : 488
 // Description      : 
@@ -38,8 +38,8 @@ int main()
 
 	std::vector<Tiles> tileContainer;
 
-	Tiles Rock('&', 8, 8);
-	Tiles Tree('T', 13, 13);
+	Tiles Rock('&');
+	Tiles Tree('T');
 
 	tileContainer.push_back(Rock);
 	tileContainer.push_back(Tree);
