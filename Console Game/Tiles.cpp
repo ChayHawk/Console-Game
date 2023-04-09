@@ -7,7 +7,7 @@ int Tiles::GetXPosition() const
 
 int Tiles::GetYPosition() const
 {
-	return mYPos;
+	return mYpos;
 }
 
 char Tiles::GetTile() const

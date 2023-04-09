@@ -5,8 +5,10 @@
 #include <string>
 
 #include "Map.h"
+#include "Collision.h"
 
 class Map;
+class Collision;
 
 class Character
 {
@@ -23,7 +25,7 @@ class Character
 		char GetCharacter() const { return mCharacter; }
 		std::string GetName() const { return mName; }
 
-		void Movement(Character::Direction choice, Map& map);
+		void Movement(Character::Direction choice, Collision& collision, Map& map);
 
 		void GetDirection(int playerX, int playerY, int oldX, int oldY);
 

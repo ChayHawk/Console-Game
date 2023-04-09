@@ -6,6 +6,7 @@
 #include <vector>
 #include <chrono>
 #include <random>
+#include <utility>
 
 #include "Tiles.h"
 #include "Character.h"
@@ -29,7 +30,22 @@ class Map
 
 		size_t GetMaxColumns() const;
 
-		void DrawRandomObjects(std::mt19937& mt, const Tiles& tile, int amountToPlace, Character& character);
+		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
+
+		void DrawObject(Tiles& tiles, int tileX, int tileY);
+
+		auto GetTileCoords()
+		{
+			return mTileCoords;
+		}
+
+		void DEBUG_DisplayTileCoords()
+		{
+			for (const auto& coord : mTileCoords)
+			{
+				std::cout << "First: " << coord.first << ", Second: " << coord.second << std::endl;
+			}
+		}
 
 	private:
 		const std::string mMapName{ "Map Name" };
@@ -39,6 +55,7 @@ class Map
 		std::vector<std::vector<char>> mGameMap;
 		char mTransitionTile{ 'H' };
 		char mObject{ '#' };
+		std::vector<std::pair<int, int>> mTileCoords;
 };
 
 #endif

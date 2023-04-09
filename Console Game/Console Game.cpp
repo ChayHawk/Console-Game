@@ -1,10 +1,10 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.30
-// Version Date     : April 7th 2023 @ 4:25 PM
+// Version          : 0.1.0.38
+// Version Date     : April 9th 2023 @ 1:03 AM
 // Date Created     : 
-// Lines of Code    : 371
+// Lines of Code    : 448
 // Description      : 
 //============================================================================
 
@@ -14,12 +14,12 @@
 #include <random>
 #include <chrono>
 
+#include "Collision.h"
 #include "Character.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Tiles.h"
 #include "Map.h"
-#include "Collision.h"
 
 int main()
 {
@@ -27,9 +27,11 @@ int main()
 
 	std::vector<Character> characterContainer;
 
+	Collision collision;
+
 	Player Hero("Hero", 'O', 5, 5);
 	Enemy Goblin("Goblin", 'X', 15, 15);
-	Map Field("Field", 20, 50, '-');
+	Map Field("Field", 20, 50, '.');
 
 	characterContainer.push_back(Hero);
 	characterContainer.push_back(Goblin);
@@ -43,7 +45,7 @@ int main()
 	tileContainer.push_back(Tree);
 
 	Field.Initialize(characterContainer);
-	Field.DrawRandomObjects(mt, Rock, 10, Hero);
+	Field.DrawRandomObjects(mt, tileContainer, 10, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
@@ -51,7 +53,7 @@ int main()
 	while (true)
 	{
 		Field.Draw();
-		Goblin.Move(mt, Field);
+		Goblin.Move(mt, collision, Field);
 
 		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
@@ -72,6 +74,6 @@ int main()
 
 		std::cin >> choice;
 
-		Hero.Movement(static_cast<Player::Direction>(choice), Field);
+		Hero.Movement(static_cast<Player::Direction>(choice), collision, Field);
 	}
 }

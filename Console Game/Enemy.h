@@ -13,7 +13,7 @@ class Enemy : public Character
 		Enemy(const std::string& name, char character, int posX, int posY) : Character{ name, character, posX, posY }
 		{}
 
-		void Move(std::mt19937& mt, Map& map);
+		void Move(std::mt19937& mt, Collision& collision, Map& map);
 };
 
 #endif
