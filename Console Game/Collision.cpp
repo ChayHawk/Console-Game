@@ -10,7 +10,7 @@ bool Collision::CheckCollision(int playerX, int playerY, const std::vector<Tiles
 {
     for (auto& i : tiles)
     {
-        if (playerX == i.GetXPosition() == playerX && playerY == i.GetYPosition())
+        if (playerX == i.GetXPosition() && playerY == i.GetYPosition())
         {
             std::cout << "Collision Detected\n";
             return true;
