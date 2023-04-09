@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.42
-// Version Date     : April 9th 2023 @ 9:20 AM
+// Version          : 0.1.0.43
+// Version Date     : April 9th 2023 @ 9:28 AM
 // Date Created     : 
 // Lines of Code    : 448
 // Description      : 
@@ -38,8 +38,10 @@ int main()
 
 	Tiles Rock('&');
 	Tiles Tree('T');
+	Tiles Water('=');
 
 	Field.Initialize(characterContainer);
+
 	Field.DrawRandomObjects(mt, Rock, 50, Hero);
 	Field.DrawRandomObjects(mt, Tree, 50, Hero);
 
