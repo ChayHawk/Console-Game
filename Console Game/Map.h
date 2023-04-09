@@ -30,18 +30,21 @@ class Map
 
 		size_t GetMaxColumns() const;
 
-		//void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
 		void DrawRandomObjects(std::mt19937& mt, const std::vector<Tiles>& tiles, int amountToPlace, Character& character);
 
 		void DrawObject(Tiles& tiles, int tileX, int tileY);
 
 		auto GetTileCoords()
 		{
-			/*for (const auto& coord : mTileCoords) 
+			return mTileCoords;
+		}
+
+		void DEBUG_DisplayTileCoords()
+		{
+			for (const auto& coord : mTileCoords)
 			{
 				std::cout << "First: " << coord.first << ", Second: " << coord.second << std::endl;
-			}*/
-			return mTileCoords;
+			}
 		}
 
 	private:
