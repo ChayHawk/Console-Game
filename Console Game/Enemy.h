@@ -3,6 +3,7 @@
 
 #include <string>
 #include <chrono>
+#include <array>
 
 #include "Map.h"
 #include "Character.h"
