@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "Character.h"
 
 void Map::Initialize(const std::vector<Character>& character)
 {
@@ -45,8 +46,6 @@ size_t Map::GetMaxColumns() const
     }
 }
 
-//Need to find a way to make this draw different amounts of each object. Could replace amountToPlace with a vector,
-//Or make the tiles vector just a tile and place multiple of the function for each object.
 void Map::DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character)
 {
     std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
