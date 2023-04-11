@@ -24,7 +24,7 @@ void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 	}
 }
 
-void Character::Movement(Character::Direction choice, Collision& collision, Map& map)
+void Character::Movement(Character::Direction choice, Map& map)
 {
 	switch (choice)
 	{

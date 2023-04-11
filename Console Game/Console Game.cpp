@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.43
-// Version Date     : April 9th 2023 @ 9:28 AM
+// Version          : 0.1.0.44
+// Version Date     : April 11th 2023 @ 11:18 AM
 // Date Created     : 
 // Lines of Code    : 448
 // Description      : 
@@ -72,6 +72,6 @@ int main()
 
 		std::cin >> choice;
 
-		Hero.Movement(static_cast<Player::Direction>(choice), collision, Field);
+		Hero.Movement(static_cast<Player::Direction>(choice), Field);
 	}
 }

@@ -9,7 +9,6 @@
 #include <utility>
 
 #include "Tiles.h"
-#include "Character.h"
 
 class Character;
 class Map;
