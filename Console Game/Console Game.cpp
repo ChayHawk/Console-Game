@@ -1,8 +1,8 @@
 //============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.45
-// Version Date     : April 11th 2023 @ 11:32 AM
+// Version          : 0.1.0.46
+// Version Date     : April 11th 2023 @ 11:35 AM
 // Date Created     : 
 // Lines of Code    : 448
 // Description      : 
@@ -51,7 +51,7 @@ int main()
 	while (true)
 	{
 		Field.Draw();
-		Goblin.Move(mt, collision, Field);
+		Goblin.Move(mt, Field);
 
 		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
