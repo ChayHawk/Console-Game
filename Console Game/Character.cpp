@@ -24,11 +24,11 @@ void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
 	}
 }
 
-void Character::Movement(Character::Direction choice, Map& map)
+void Character::Movement(char choice, Map& map)
 {
 	switch (choice)
 	{
-		case Direction::UP:
+		case 'w':
 			if (collision.CheckCollision(mPosX, mPosY - 1, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Up.\n";
@@ -42,7 +42,7 @@ void Character::Movement(Character::Direction choice, Map& map)
 			}
 			break;
 
-		case Direction::DOWN:
+		case 's':
 			if (collision.CheckCollision(mPosX, mPosY + 1, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Down.\n";
@@ -56,7 +56,7 @@ void Character::Movement(Character::Direction choice, Map& map)
 			}
 			break;
 
-		case Direction::LEFT:
+		case 'a':
 			if (collision.CheckCollision(mPosX - 1, mPosY, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Left.\n";
@@ -70,7 +70,7 @@ void Character::Movement(Character::Direction choice, Map& map)
 			}
 			break;
 
-		case Direction::RIGHT:
+		case 'd':
 			if (collision.CheckCollision(mPosX + 1 , mPosY, map, map.GetTileCoords()))
 			{
 				std::cout << "Cannot move Right.\n";
