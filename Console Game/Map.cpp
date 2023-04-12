@@ -23,10 +23,12 @@ void Map::Draw() const
 	}
 }
 
+//This function updates the map with the players new position, and draws a map tile where
+//The player was so it doesnt leave a trail of player characters.
 void Map::Update(size_t oldX, size_t oldY, size_t newX, size_t newY, char character)
 {
-	mGameMap[oldY][oldX] = mMapTile;
-	mGameMap[newY][newX] = character;
+	mGameMap[oldY][oldX] = mMapTile; // Draw new map tile where player was
+	mGameMap[newY][newX] = character; // Draw player at new position
 }
 
 size_t Map::GetMaxRows() const
