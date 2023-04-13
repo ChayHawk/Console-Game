@@ -1,8 +1,8 @@
 ﻿//============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.49
-// Version Date     : April 13th 2023 @ 10:06 AM
+// Version          : 0.1.0.50
+// Version Date     : April 13th 2023 @ 10:41 AM
 // Date Created     : 
 // Lines of Code    : 520
 // Description      : 
@@ -67,6 +67,7 @@ int main()
 		std::cout << "s) Move Down\n";
 		std::cout << "a) Move Left\n";
 		std::cout << "d) Move Right\n";
+		std::cout << "p) Search\n";
 
 		char choice{ };
 

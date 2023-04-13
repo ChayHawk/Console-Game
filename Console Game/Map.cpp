@@ -89,3 +89,15 @@ void Map::LoadFromFile()
 {
 
 }
+
+//Need to create a way to use this on the map
+void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character)
+{
+    std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
+    std::uniform_int_distribution<> columns{ 0, mMapColumns - 1 };
+
+    int row = rows(mt);
+    int col = columns(mt);
+
+    mGameMap[row][col] = 'x';
+}

@@ -37,6 +37,8 @@ class Map
 
 		void LoadFromFile();
 
+		void PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character);
+
 	private:
 		const std::string mMapName{ "Map Name" };
 		int mMapRows{ 5 };

@@ -83,6 +83,10 @@ void Character::Movement(char choice, Map& map)
 				return;
 			}
 			break;
+
+		case 'p':
+			//Add code to handle finding hidden treasure
+			break;
 		default:
 			std::cout << "Error\n";
 	}
