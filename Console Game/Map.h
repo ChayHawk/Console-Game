@@ -35,14 +35,15 @@ class Map
 
 		void DEBUG_DisplayTileCoords();
 
+		void LoadFromFile();
+
 	private:
 		const std::string mMapName{ "Map Name" };
 		int mMapRows{ 5 };
 		int mMapColumns{ 5 };
-		const char mMapTile{ '+' };
+		const char mMapTile{ ' ' };
 		std::vector<std::vector<char>> mGameMap;
-		char mTransitionTile{ 'H' };
-		char mObject{ '#' };
+		char mObject{ ' ' };
 		std::vector<std::pair<int, int>> mTileCoords;
 };
 

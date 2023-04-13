@@ -83,3 +83,9 @@ void Map::DEBUG_DisplayTileCoords()
 		std::cout << "First: " << coord.first << ", Second: " << coord.second << std::endl;
 	}
 }
+
+//Load a map from file
+void Map::LoadFromFile()
+{
+
+}

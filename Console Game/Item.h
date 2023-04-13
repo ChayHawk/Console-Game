@@ -11,5 +11,6 @@ class Item
 	private:
 		std::string mName{ "Item Name" };
 		int mValue{ 0 };
-};
 
+
+};
