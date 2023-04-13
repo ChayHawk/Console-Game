@@ -38,6 +38,10 @@ class Map
 		void LoadFromFile();
 
 		void PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character);
+		size_t GetTreasureCoordsRow() const;
+
+		//Not Working
+		size_t GetTreasureCoordsColumn() const;
 
 	private:
 		const std::string mMapName{ "Map Name" };
@@ -47,6 +51,7 @@ class Map
 		std::vector<std::vector<char>> mGameMap;
 		char mObject{ ' ' };
 		std::vector<std::pair<int, int>> mTileCoords;
+		std::vector<std::pair<int, int>> mTreasureCoords;
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "Character.h"
 
-void Character::GetDirection(int playerX, int playerY, int oldX, int oldY)
+void Character::GetDirection(int playerY, int playerX, int oldY, int oldX)
 {
 	if (playerY == oldY && playerX == oldX)
 	{

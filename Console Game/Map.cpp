@@ -90,7 +90,7 @@ void Map::LoadFromFile()
 
 }
 
-//Need to create a way to use this on the map
+//BUG - Coords do not correspond with tile.
 void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character)
 {
     std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
@@ -99,5 +99,17 @@ void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& charact
     int row = rows(mt);
     int col = columns(mt);
 
-    mGameMap[row][col] = 'x';
+    mTreasureCoords.push_back(std::make_pair(row, col));
+
+    mGameMap[row][col] = tiles.GetTile();
+}
+
+size_t Map::GetTreasureCoordsRow() const
+{
+    return mTreasureCoords[0].second;
+}
+
+size_t Map::GetTreasureCoordsColumn() const
+{
+    return mTileCoords[0].first;
 }

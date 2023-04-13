@@ -30,7 +30,7 @@ int main()
 	Collision collision;
 
 	Player Hero("Hero", 'O', 5, 5);
-	Enemy Goblin("Goblin", 'X', 15, 15);
+	Enemy Goblin("Goblin", 'E', 15, 15);
 	Map Field("Field", 20, 50, '.');
 
 	characterContainer.push_back(Hero);
@@ -39,11 +39,14 @@ int main()
 	Tiles Rock('&');
 	Tiles Tree('T');
 	Tiles Water('=');
+	Tiles Treasure('x');
 
 	Field.Initialize(characterContainer);
 
-	Field.DrawRandomObjects(mt, Rock, 50, Hero);
-	Field.DrawRandomObjects(mt, Tree, 50, Hero);
+	Field.DrawRandomObjects(mt, Rock, 5, Hero);
+	Field.DrawRandomObjects(mt, Tree, 5, Hero);
+
+	Field.PlaceRandomTreasure(mt, Treasure, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
@@ -53,10 +56,10 @@ int main()
 		Field.Draw();
 		Goblin.Move(mt, Field);
 
-		std::cout << "Player X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
+		std::cout << "Player  Y: " << Hero.GetYPosition() << " Player X: " << Hero.GetXPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
 
-		Hero.GetDirection(Hero.GetXPosition(), Hero.GetYPosition(), oldX, oldY);
+		Hero.GetDirection(Hero.GetYPosition(), Hero.GetXPosition(), oldY, oldX);
 
 		oldX = Hero.GetXPosition();
 		oldY = Hero.GetYPosition();
@@ -72,6 +75,20 @@ int main()
 		char choice{ };
 
 		std::cin >> choice;
+
+		std::cout << "Treasure Y: " << Field.GetTreasureCoordsRow() << " Treasure X: " << Field.GetTreasureCoordsColumn() << '\n';
+
+		if (Hero.GetYPosition() == Field.GetTreasureCoordsRow() && Hero.GetXPosition() == Field.GetTreasureCoordsColumn())
+		{
+			if (choice == 'p')
+			{
+				std::cout << "You found treasure!\n\n";
+			}
+		}
+		else
+		{
+			std::cout << "Didnt find anything\n\n";
+		}
 
 		Hero.Movement(choice, Field);
 	}
