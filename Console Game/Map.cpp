@@ -104,9 +104,13 @@ void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& charact
     int row = rows(mt);
     int col = columns(mt);
 
-    mTreasureCoords.push_back(std::make_pair(row, col));
+    if ((row != character.GetXPosition() || col != character.GetYPosition()) &&
+        (col != character.GetXPosition() || row != character.GetYPosition()))
+    {
+        mTreasureCoords.push_back(std::make_pair(row, col));
 
-    mGameMap[row][col] = tiles.GetTile();
+        mGameMap[row][col] = tiles.GetTile();
+    }
 }
 
 size_t Map::GetTreasureCoordsColumn() const

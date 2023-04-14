@@ -1,8 +1,8 @@
 ﻿//============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.51
-// Version Date     : April 14th 2023 @ 11:28 AM
+// Version          : 0.1.0.52
+// Version Date     : April 14th 2023 @ 11:47 AM
 // Date Created     : 
 // Lines of Code    : 520
 // Description      : 
@@ -21,10 +21,10 @@
 #include "Tiles.h"
 #include "Map.h"
 
+std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
+
 int main()
 {
-	std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
-
 	std::vector<Character> characterContainer;
 
 	Collision collision;

@@ -15,6 +15,7 @@ class Enemy : public Character
 		{}
 
 		void Move(std::mt19937& mt, Map& map);
+
 };
 
 #endif
