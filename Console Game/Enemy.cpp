@@ -1,6 +1,7 @@
 #include "Enemy.h"
+#include "Mersenne_Twister.h"
 
-void Enemy::Move(std::mt19937& mt, Map& map)
+void Enemy::Move(Map& map)
 {
     // Randomize directions
     std::uniform_int_distribution<> moveEnemy{ 0, 3 };

@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "Character.h"
+#include "Mersenne_Twister.h"
 
 void Map::Initialize(const std::vector<Character>& character)
 {
@@ -48,15 +49,15 @@ size_t Map::GetMaxColumns() const
     }
 }
 
-void Map::DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character)
+void Map::DrawRandomObjects(Tiles& tiles, int amountToPlace, Character& character)
 {
     std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
     std::uniform_int_distribution<> columns{ 0, mMapColumns - 1 };
 
     for (int i{ }; i < amountToPlace; ++i)
     {
-        int row = rows(mt);
-        int col = columns(mt);
+        int row = rows(::mt);
+        int col = columns(::mt);
 
         // If the object is equal to a characters position, do not draw it, we don't want an object
         // to be drawn over characters.
@@ -96,13 +97,13 @@ void Map::LoadFromFile()
 }
 
 //BUG - Coords do not correspond with tile.
-void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character)
+void Map::PlaceRandomTreasure(Tiles& tiles, Character& character)
 {
     std::uniform_int_distribution<> rows{ 0, mMapRows - 1 };
     std::uniform_int_distribution<> columns{ 0, mMapColumns - 1 };
 
-    int row = rows(mt);
-    int col = columns(mt);
+    int row = rows(::mt);
+    int col = columns(::mt);
 
     if ((row != character.GetXPosition() || col != character.GetYPosition()) &&
         (col != character.GetXPosition() || row != character.GetYPosition()))

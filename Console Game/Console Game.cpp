@@ -1,8 +1,8 @@
 ﻿//============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.52
-// Version Date     : April 14th 2023 @ 11:47 AM
+// Version          : 0.1.0.53
+// Version Date     : April 14th 2023 @ 12:28 PM
 // Date Created     : 
 // Lines of Code    : 520
 // Description      : 
@@ -20,8 +20,6 @@
 #include "Enemy.h"
 #include "Tiles.h"
 #include "Map.h"
-
-std::mt19937 mt{ static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count()) };
 
 int main()
 {
@@ -43,10 +41,10 @@ int main()
 
 	Field.Initialize(characterContainer);
 
-	Field.DrawRandomObjects(mt, Rock, 5, Hero);
-	Field.DrawRandomObjects(mt, Tree, 5, Hero);
+	Field.DrawRandomObjects(Rock, 5, Hero);
+	Field.DrawRandomObjects(Tree, 5, Hero);
 
-	Field.PlaceRandomTreasure(mt, Treasure, Hero);
+	Field.PlaceRandomTreasure(Treasure, Hero);
 
 	int oldX{ Hero.GetXPosition()};
 	int oldY{ Hero.GetYPosition()};
@@ -54,7 +52,7 @@ int main()
 	while (true)
 	{
 		Field.Draw();
-		Goblin.Move(mt, Field);
+		Goblin.Move(Field);
 
 		std::cout << "Player  X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";

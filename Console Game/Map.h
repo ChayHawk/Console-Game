@@ -32,7 +32,7 @@ class Map
 
 		size_t GetMaxColumns() const;
 
-		void DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character);
+		void DrawRandomObjects(Tiles& tiles, int amountToPlace, Character& character);
 
 		IntPairVect GetTileCoords();
 
@@ -41,7 +41,7 @@ class Map
 
 		void LoadFromFile();
 
-		void PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character);
+		void PlaceRandomTreasure(Tiles& tiles, Character& character);
 
 		size_t GetTreasureCoordsColumn() const;
 		size_t GetTreasureCoordsRow() const;
