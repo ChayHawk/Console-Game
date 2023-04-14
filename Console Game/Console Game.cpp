@@ -1,8 +1,8 @@
 ﻿//============================================================================
 // Name             : Console Game
 // Author           : Chay Hawk
-// Version          : 0.1.0.50
-// Version Date     : April 14th 2023 @ 11:09 AM
+// Version          : 0.1.0.51
+// Version Date     : April 14th 2023 @ 11:28 AM
 // Date Created     : 
 // Lines of Code    : 520
 // Description      : 
@@ -70,25 +70,11 @@ int main()
 		std::cout << "s) Move Down\n";
 		std::cout << "a) Move Left\n";
 		std::cout << "d) Move Right\n";
-		std::cout << "p) Search\n";
+		std::cout << "p) Dig\n";
 
 		char choice{ };
 
 		std::cin >> choice;
-
-		std::cout << "Treasure X: " << Field.GetTreasureCoordsColumn() << " Treasure Y: " << Field.GetTreasureCoordsRow() << '\n';
-
-		if (Hero.GetYPosition() == Field.GetTreasureCoordsRow() && Hero.GetXPosition() == Field.GetTreasureCoordsColumn())
-		{
-			if (choice == 'p')
-			{
-				std::cout << "You found treasure!\n\n";
-			}
-		}
-		else
-		{
-			std::cout << "Didnt find anything\n\n";
-		}
 
 		Hero.Movement(choice, Field);
 	}

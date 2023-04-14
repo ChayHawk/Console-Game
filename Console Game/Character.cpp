@@ -85,9 +85,24 @@ void Character::Movement(char choice, Map& map)
 			break;
 
 		case 'p':
-			//Add code to handle finding hidden treasure
+			Dig(choice, map);
 			break;
 		default:
 			std::cout << "Error\n";
+	}
+}
+
+void Character::Dig(int choice, Map& map)
+{
+	if (GetYPosition() == map.GetTreasureCoordsRow() && GetXPosition() == map.GetTreasureCoordsColumn())
+	{
+		if (choice == 'p')
+		{
+			std::cout << "You found treasure!\n\n";
+		}
+	}
+	else
+	{
+		std::cout << "Didnt find anything\n\n";
 	}
 }

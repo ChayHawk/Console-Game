@@ -24,6 +24,8 @@ class Character
 
 		void GetDirection(int playerX, int playerY, int oldX, int oldY);
 
+		void Dig(int choice, Map& map);
+
 	private:
 		std::string mName{ "Character" };
 		const char mCharacter{ 'C' };

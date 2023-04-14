@@ -37,6 +37,7 @@ class Map
 		IntPairVect GetTileCoords();
 
 		void DEBUG_DisplayTileCoords();
+		void DEBUG_GetTreatureCoords();
 
 		void LoadFromFile();
 

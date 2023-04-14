@@ -84,6 +84,11 @@ void Map::DEBUG_DisplayTileCoords()
 	}
 }
 
+void Map::DEBUG_GetTreatureCoords()
+{
+    std::cout << "Treasure X: " << GetTreasureCoordsColumn() << " Treasure Y: " << GetTreasureCoordsRow() << '\n';
+}
+
 //Load a map from file
 void Map::LoadFromFile()
 {
