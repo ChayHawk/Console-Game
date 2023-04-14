@@ -2,7 +2,7 @@
 // Name             : Console Game
 // Author           : Chay Hawk
 // Version          : 0.1.0.50
-// Version Date     : April 13th 2023 @ 10:41 AM
+// Version Date     : April 14th 2023 @ 11:09 AM
 // Date Created     : 
 // Lines of Code    : 520
 // Description      : 
@@ -56,7 +56,7 @@ int main()
 		Field.Draw();
 		Goblin.Move(mt, Field);
 
-		std::cout << "Player  Y: " << Hero.GetYPosition() << " Player X: " << Hero.GetXPosition() << '\n';
+		std::cout << "Player  X: " << Hero.GetXPosition() << " Player Y: " << Hero.GetYPosition() << '\n';
 		std::cout << "Player Old X: " << oldX << " Player Old Y: " << oldY << "\n\n";
 
 		Hero.GetDirection(Hero.GetYPosition(), Hero.GetXPosition(), oldY, oldX);
@@ -76,7 +76,7 @@ int main()
 
 		std::cin >> choice;
 
-		std::cout << "Treasure Y: " << Field.GetTreasureCoordsRow() << " Treasure X: " << Field.GetTreasureCoordsColumn() << '\n';
+		std::cout << "Treasure X: " << Field.GetTreasureCoordsColumn() << " Treasure Y: " << Field.GetTreasureCoordsRow() << '\n';
 
 		if (Hero.GetYPosition() == Field.GetTreasureCoordsRow() && Hero.GetXPosition() == Field.GetTreasureCoordsColumn())
 		{

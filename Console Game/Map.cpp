@@ -71,7 +71,7 @@ void Map::DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, C
     }
 }
 
-std::vector<std::pair<int, int>> Map::GetTileCoords()
+IntPairVect Map::GetTileCoords()
 {
 	return mTileCoords;
 }
@@ -104,12 +104,12 @@ void Map::PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& charact
     mGameMap[row][col] = tiles.GetTile();
 }
 
-size_t Map::GetTreasureCoordsRow() const
+size_t Map::GetTreasureCoordsColumn() const
 {
     return mTreasureCoords[0].second;
 }
 
-size_t Map::GetTreasureCoordsColumn() const
+size_t Map::GetTreasureCoordsRow() const
 {
-    return mTileCoords[0].first;
+    return mTreasureCoords[0].first;
 }

@@ -13,6 +13,9 @@
 class Character;
 class Map;
 
+using IntPairVect = std::vector<std::pair<int, int>>;
+using CharVect2D = std::vector<std::vector<char>>;
+
 class Map
 {
 	public:
@@ -31,27 +34,26 @@ class Map
 
 		void DrawRandomObjects(std::mt19937& mt, Tiles& tiles, int amountToPlace, Character& character);
 
-		std::vector<std::pair<int, int>> GetTileCoords();
+		IntPairVect GetTileCoords();
 
 		void DEBUG_DisplayTileCoords();
 
 		void LoadFromFile();
 
 		void PlaceRandomTreasure(std::mt19937& mt, Tiles& tiles, Character& character);
-		size_t GetTreasureCoordsRow() const;
 
-		//Not Working
 		size_t GetTreasureCoordsColumn() const;
+		size_t GetTreasureCoordsRow() const;
 
 	private:
 		const std::string mMapName{ "Map Name" };
 		int mMapRows{ 5 };
 		int mMapColumns{ 5 };
 		const char mMapTile{ ' ' };
-		std::vector<std::vector<char>> mGameMap;
+		CharVect2D mGameMap;
 		char mObject{ ' ' };
-		std::vector<std::pair<int, int>> mTileCoords;
-		std::vector<std::pair<int, int>> mTreasureCoords;
+		IntPairVect mTileCoords;
+		IntPairVect mTreasureCoords;
 };
 
 #endif
